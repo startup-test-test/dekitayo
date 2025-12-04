@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO戦略まとめ 完全版 - できたよ！</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0d1421 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            line-height: 1.8;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* サイドバー */
+        .sidebar {
+            width: 280px;
+            background: rgba(0,0,0,0.3);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 15px;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            color: #FF9F43;
+            font-weight: 700;
+        }
+
+        .sidebar-subtitle {
+            font-size: 11px;
+            color: #8892b0;
+            margin-top: 5px;
+        }
+
+        .nav-section {
+            margin-bottom: 15px;
+        }
+
+        .nav-section-title {
+            font-size: 11px;
+            color: #64ffda;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 10px 20px 5px;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 8px 20px 8px 30px;
+            color: #a8b2d1;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            border-left-color: #64ffda;
+        }
+
+        .nav-item.active {
+            background: rgba(100, 255, 218, 0.15);
+            color: #64ffda;
+            border-left-color: #64ffda;
+        }
+
+        .nav-item .icon {
+            margin-right: 8px;
+        }
+
+        /* メインコンテンツ */
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 40px 60px;
+            max-width: 1000px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FF9F43 0%, #ffcd38 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-meta {
+            color: #8892b0;
+            font-size: 13px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #64ffda;
+            margin: 50px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(100, 255, 218, 0.3);
+            scroll-margin-top: 20px;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #ccd6f6;
+            margin: 30px 0 15px;
+        }
+
+        h4 {
+            font-size: 15px;
+            color: #a8b2d1;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #a8b2d1;
+        }
+
+        /* ハイライトボックス */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(255, 159, 67, 0.15) 0%, rgba(255, 159, 67, 0.05) 100%);
+            border: 1px solid rgba(255, 159, 67, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .highlight-box.vision {
+            text-align: center;
+        }
+
+        .highlight-box .title {
+            color: #FF9F43;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .highlight-box .content {
+            color: #ccd6f6;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* フローチャート */
+        .flow-chart {
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .flow-step .step-content {
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 12px 20px;
+            color: #ccd6f6;
+            flex: 1;
+        }
+
+        .flow-arrow {
+            text-align: center;
+            color: #64ffda;
+            font-size: 20px;
+            margin: 5px 0;
+        }
+
+        /* テーブル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: rgba(100, 255, 218, 0.15);
+            color: #64ffda;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: #a8b2d1;
+            font-size: 13px;
+        }
+
+        tr:hover td {
+            background: rgba(100, 255, 218, 0.05);
+        }
+
+        /* カテゴリカード */
+        .category-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .category-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .category-card.priority-high {
+            border-color: rgba(100, 255, 218, 0.4);
+            background: rgba(100, 255, 218, 0.05);
+        }
+
+        .category-card.priority-medium {
+            border-color: rgba(255, 159, 67, 0.4);
+            background: rgba(255, 159, 67, 0.05);
+        }
+
+        .category-card.priority-low {
+            border-color: rgba(255, 99, 99, 0.4);
+            background: rgba(255, 99, 99, 0.05);
+        }
+
+        .category-card .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .category-card .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ccd6f6;
+        }
+
+        .category-card .card-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .category-card.priority-high .card-badge {
+            background: rgba(100, 255, 218, 0.2);
+            color: #64ffda;
+        }
+
+        .category-card.priority-medium .card-badge {
+            background: rgba(255, 159, 67, 0.2);
+            color: #FF9F43;
+        }
+
+        .category-card.priority-low .card-badge {
+            background: rgba(255, 99, 99, 0.2);
+            color: #ff6363;
+        }
+
+        .category-card .card-stat {
+            font-size: 24px;
+            font-weight: 700;
+            color: #64ffda;
+            margin: 10px 0;
+        }
+
+        .category-card .card-desc {
+            font-size: 12px;
+            color: #8892b0;
+        }
+
+        /* コードブロック */
+        .code-block {
+            background: #0d1117;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: "SF Mono", "Fira Code", monospace;
+            font-size: 13px;
+            color: #c9d1d9;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        /* チェックリスト */
+        .checklist {
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+            color: #a8b2d1;
+        }
+
+        .checklist-item .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #64ffda;
+            border-radius: 4px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* KPIカード */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .kpi-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .kpi-card .kpi-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #64ffda;
+        }
+
+        .kpi-card .kpi-label {
+            font-size: 12px;
+            color: #8892b0;
+            margin-top: 5px;
+        }
+
+        .kpi-card .kpi-period {
+            font-size: 11px;
+            color: #FF9F43;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 重要メッセージ */
+        .important-message {
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1) 0%, rgba(100, 255, 218, 0.02) 100%);
+            border: 2px solid rgba(100, 255, 218, 0.4);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .important-message .message-content {
+            font-size: 16px;
+            color: #ccd6f6;
+            line-height: 2;
+        }
+
+        .important-message .highlight {
+            color: #64ffda;
+            font-weight: 700;
+        }
+
+        /* リスト */
+        ul, ol {
+            margin: 15px 0 15px 25px;
+            color: #a8b2d1;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* タグ */
+        .tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .tag-green {
+            background: rgba(100, 255, 218, 0.2);
+            color: #64ffda;
+        }
+
+        .tag-orange {
+            background: rgba(255, 159, 67, 0.2);
+            color: #FF9F43;
+        }
+
+        .tag-red {
+            background: rgba(255, 99, 99, 0.2);
+            color: #ff6363;
+        }
+
+        /* フッター */
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: #5a6a8a;
+            font-size: 12px;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            .main {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- サイドバー -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">SEO戦略まとめ</div>
+                <div class="sidebar-subtitle">完全版ドキュメント</div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">ナビゲーション</div>
+                <a class="nav-item" href="../index.html"><span class="icon">🏠</span>ポータルに戻る</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">基本戦略</div>
+                <a class="nav-item" href="#vision"><span class="icon">🎯</span>1. ビジョン</a>
+                <a class="nav-item" href="#winning"><span class="icon">🏆</span>2. 勝ち筋戦略</a>
+                <a class="nav-item" href="#competitor"><span class="icon">📊</span>3. 競合分析</a>
+                <a class="nav-item" href="#underdog"><span class="icon">🥊</span>4. 弱者の戦略</a>
+                <a class="nav-item" href="#differentiation"><span class="icon">✨</span>5. 差別化ポイント</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">実行計画</div>
+                <a class="nav-item" href="#backlink"><span class="icon">🔗</span>6. 被リンク獲得</a>
+                <a class="nav-item" href="#content"><span class="icon">📝</span>7. コンテンツ戦略</a>
+                <a class="nav-item" href="#qualification"><span class="icon">📜</span>8. 資格取得</a>
+                <a class="nav-item" href="#pricing"><span class="icon">💰</span>9. 料金プラン</a>
+                <a class="nav-item" href="#ai"><span class="icon">🤖</span>10. AI活用</a>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-section-title">目標・KPI</div>
+                <a class="nav-item" href="#revenue"><span class="icon">📈</span>11. 収益シミュレーション</a>
+                <a class="nav-item" href="#schedule"><span class="icon">📅</span>12. 実行スケジュール</a>
+                <a class="nav-item" href="#kpi"><span class="icon">🎯</span>13. KPI目標</a>
+            </div>
+        </nav>
+
+        <!-- メインコンテンツ -->
+        <main class="main">
+            <h1>SEO戦略まとめ 完全版</h1>
+            <div class="page-meta">
+                最終更新: 2024年12月4日 | できたよ！プロジェクト
+            </div>
+
+            <!-- 1. ビジョン -->
+            <h2 id="vision">1. ビジョン</h2>
+
+            <div class="highlight-box vision">
+                <div class="title">「自己肯定感が低い子供を、プログラミングで輝かせる」</div>
+                <div class="content">
+                    教育心理学に基づいたメソッドで<br>
+                    子供の自己肯定感を高め、<br>
+                    その手段としてプログラミング教室を紹介する
+                </div>
+            </div>
+
+            <h3>運営者の強み</h3>
+            <table>
+                <tr><th>経験・スキル</th><th>内容</th><th>活用方法</th></tr>
+                <tr><td>デザイン学校卒業</td><td>専門教育を受けた</td><td>E-E-A-T（専門性の裏付け）</td></tr>
+                <tr><td>デザイナー実務5年</td><td>現場での実践経験</td><td>プロフィールでの信頼性向上</td></tr>
+                <tr><td>HP制作（コーディング）</td><td>HTML/CSS/JavaScript</td><td>プログラミング教育の文脈で語れる</td></tr>
+                <tr><td>教育書籍を継続的に読む</td><td>自己肯定感・非認知能力など</td><td>記事の専門性・引用元として活用</td></tr>
+            </table>
+
+            <h4>コーディングとプログラミングの関係</h4>
+            <div class="code-block">プログラミング（広義）
+├── Webコーディング（HTML/CSS/JavaScript）← 運営者の経験
+├── アプリ開発（Swift/Kotlin）
+├── ゲーム開発（Unity/Scratch）
+└── AI/データサイエンス（Python）</div>
+            <p><strong>→ Webコーディングはプログラミングの一種。運営者の経験はE-E-A-Tの専門性として活用。</strong></p>
+
+            <h4>小学生向け市場の現実</h4>
+            <p>調査の結果、小学生向けHTML/CSS・Webデザイン教室は<strong>ほぼ存在しない</strong>ことが判明。</p>
+            <table>
+                <tr><th>スクール</th><th>Webデザイン/HTML/CSS</th></tr>
+                <tr><td>Tech Kids School</td><td><span class="tag tag-red">なし</span>（Scratch、Swift、C#が中心）</td></tr>
+                <tr><td>LITALICOワンダー</td><td><span class="tag tag-red">なし</span>（ゲーム、ロボット、3DCGが中心）</td></tr>
+                <tr><td>デジタネ</td><td><span class="tag tag-green">あり</span>（HTML&CSSコース、オンラインのみ）</td></tr>
+            </table>
+
+            <h4>小学生向けにHTML/CSSが少ない理由</h4>
+            <table>
+                <tr><th>理由</th><th>詳細</th></tr>
+                <tr><td>成果物が地味</td><td>Scratchやマイクラはすぐ動く・遊べる。HTMLは静的で子供が飽きやすい</td></tr>
+                <tr><td>タイピングが壁</td><td>小学生はタイピングが遅い。コード入力が苦痛になる</td></tr>
+                <tr><td>エラーが分かりにくい</td><td>閉じタグ忘れなど、小学生には特定しづらい</td></tr>
+                <tr><td>親の期待と違う</td><td>「プログラミング」と聞いてゲームやアプリを期待する</td></tr>
+            </table>
+
+            <div class="highlight-box">
+                <div class="title">結論</div>
+                <div class="content">
+                    小学生向けHTML/CSS教室の市場がない = 掲載する教室がない = <strong>被リンク獲得できない</strong>
+                </div>
+            </div>
+
+            <h4>ターゲット教室（確定）</h4>
+            <p>市場があり、被リンク獲得が可能なカテゴリに絞り込む。</p>
+            <table>
+                <tr><th>カテゴリ</th><th>教室数</th><th>被リンク獲得</th><th>対応</th></tr>
+                <tr><td>Scratch教室</td><td>多い</td><td><span class="tag tag-green">◎</span></td><td><strong>ターゲット</strong></td></tr>
+                <tr><td>マイクラ/ロブロックス教室</td><td>多い</td><td><span class="tag tag-green">◎</span></td><td><strong>ターゲット</strong></td></tr>
+                <tr><td>ロボット教室</td><td>多い</td><td><span class="tag tag-green">◎</span></td><td><strong>ターゲット</strong></td></tr>
+                <tr><td>HTML/CSS教室</td><td>ほぼない</td><td><span class="tag tag-red">×</span></td><td>対象外</td></tr>
+                <tr><td>Webデザイン教室</td><td>ほぼない</td><td><span class="tag tag-red">×</span></td><td>対象外</td></tr>
+            </table>
+
+            <div class="code-block">【ターゲット教室】
+・プログラミング教室（Scratch、マイクラ、ロブロックス等）
+・ロボット教室
+
+【対象外】
+・Webデザイン教室（市場がない）
+・HTML/CSS教室（市場がない）</div>
+
+            <h4>運営者の経験の活用方法</h4>
+            <p>デザイン/コーディング経験は「教室紹介」ではなく「E-E-A-Tの裏付け」として活用。</p>
+            <table>
+                <tr><th>活用方法</th><th>詳細</th></tr>
+                <tr><td>プロフィール</td><td>「デザイナー歴5年、プログラミング経験あり」で専門性を示す</td></tr>
+                <tr><td>記事の視点</td><td>「クリエイティブな経験者」として教室を評価・紹介</td></tr>
+                <tr><td>独自の切り口</td><td>「デザイン思考 × 自己肯定感」など</td></tr>
+            </table>
+
+            <div class="highlight-box">
+                <div class="title">独自ポジション</div>
+                <div class="content">
+                    <strong>「デザイナー × 教育心理学 × プログラミング」</strong><br><br>
+                    ・デザイン5年の実務経験<br>
+                    ・教育書籍から学んだ専門知識<br>
+                    ・プログラミング（コーディング）の実践スキル<br><br>
+                    → 他のアフィリエイトサイトにはない独自の視点
+                </div>
+            </div>
+
+            <h3>書籍レビュー戦略</h3>
+            <p>教育系書籍を読んでブログに書くことで、E-E-A-T（専門性・信頼性）を強化する。</p>
+
+            <h4>読むべき書籍カテゴリ</h4>
+            <table>
+                <tr><th>カテゴリ</th><th>目的</th><th>例</th></tr>
+                <tr><td>自己肯定感</td><td>メインテーマの深掘り</td><td>「自己肯定感の教科書」中島輝</td></tr>
+                <tr><td>非認知能力</td><td>サブテーマの強化</td><td>「学力の経済学」中室牧子</td></tr>
+                <tr><td>発達心理学</td><td>子供の成長理解</td><td>「子どもの発達心理学」</td></tr>
+                <tr><td>教育論</td><td>教育全般の知識</td><td>「MINDSET」キャロル・ドゥエック</td></tr>
+                <tr><td>プログラミング教育</td><td>専門領域の知識</td><td>「プログラミング教育はいらない」</td></tr>
+            </table>
+
+            <h4>書籍レビュー記事の書き方</h4>
+            <div class="code-block">タイトル: 【書評】「〇〇」を読んで学んだ子供の自己肯定感の育て方
+
+構成:
+1. この本を読んだ理由
+2. 本の概要（3行でまとめ）
+3. 印象に残った3つのポイント
+4. 子育て・教育への活かし方
+5. こんな人におすすめ</div>
+
+            <h4>期待効果</h4>
+            <table>
+                <tr><th>効果</th><th>詳細</th></tr>
+                <tr><td>E-E-A-T強化</td><td>「この人は本を読んで勉強している」という信頼性</td></tr>
+                <tr><td>記事の引用元</td><td>他の記事で「〇〇という本によると」と引用できる</td></tr>
+                <tr><td>内部リンク</td><td>書評記事 ↔ 関連記事 の相互リンク</td></tr>
+                <tr><td>コンテンツ量</td><td>月4冊 × 12ヶ月 = 48記事/年</td></tr>
+            </table>
+            <p><strong>→ 月4冊ペースで読み、書評記事を書く</strong></p>
+
+            <h3>ビジネスモデル</h3>
+            <div class="flow-chart">
+                <div class="flow-step"><div class="step-content">教育心理学の記事で集客</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">「自己肯定感を高めたい」保護者が集まる</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">解決策としてプログラミング教室を提案</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">提携教室へ送客</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">収益化（アフィリエイト・送客手数料）</div></div>
+            </div>
+
+            <!-- 2. 勝ち筋戦略 -->
+            <h2 id="winning">2. 勝ち筋戦略</h2>
+
+            <div class="highlight-box">
+                <div class="title">勝ち筋の要約</div>
+                <div class="content">
+                    <strong>自己肯定感（109万検索）</strong> × <strong>子育て・教育</strong> × <strong>プログラミング教室紹介</strong><br><br>
+                    競合が手薄な領域で集客 → 教室アフィリエイトで収益化
+                </div>
+            </div>
+
+            <h3>◎ 最優先カテゴリ（競合が弱い）</h3>
+            <div class="category-cards">
+                <div class="category-card priority-high">
+                    <div class="card-header">
+                        <div class="card-title">自己肯定感</div>
+                        <div class="card-badge">最優先</div>
+                    </div>
+                    <div class="card-stat">109万/月</div>
+                    <div class="card-desc">競合5社ほぼ未着手。ビジョン直結。専門サイトが少ない</div>
+                </div>
+                <div class="category-card priority-high">
+                    <div class="card-header">
+                        <div class="card-title">非認知能力</div>
+                        <div class="card-badge">最優先</div>
+                    </div>
+                    <div class="card-stat">30万/月</div>
+                    <div class="card-desc">教育専門用語で競合少。自己肯定感と親和性が高い</div>
+                </div>
+                <div class="category-card priority-high">
+                    <div class="card-header">
+                        <div class="card-title">STEAM教育</div>
+                        <div class="card-badge">最優先</div>
+                    </div>
+                    <div class="card-stat">13万/月</div>
+                    <div class="card-desc">プログラミング以外の切り口で差別化しやすい</div>
+                </div>
+            </div>
+
+            <h3>○ 条件付きで狙うカテゴリ</h3>
+            <div class="category-cards">
+                <div class="category-card priority-medium">
+                    <div class="card-header">
+                        <div class="card-title">発達障害</div>
+                        <div class="card-badge">条件付き</div>
+                    </div>
+                    <div class="card-stat">1,066万/月</div>
+                    <div class="card-desc">「自己肯定感×発達障害」の掛け合わせで</div>
+                </div>
+                <div class="category-card priority-medium">
+                    <div class="card-header">
+                        <div class="card-title">小学生</div>
+                        <div class="card-badge">条件付き</div>
+                    </div>
+                    <div class="card-stat">1,223万/月</div>
+                    <div class="card-desc">「小学生 自己肯定感」「褒め方」など教育寄りで</div>
+                </div>
+                <div class="category-card priority-medium">
+                    <div class="card-header">
+                        <div class="card-title">子供</div>
+                        <div class="card-badge">条件付き</div>
+                    </div>
+                    <div class="card-stat">2,700万/月</div>
+                    <div class="card-desc">「子供 自信」「子供 褒める」など心理寄りで</div>
+                </div>
+            </div>
+
+            <h3>× 避けるべきカテゴリ</h3>
+            <table>
+                <tr><th>カテゴリ</th><th>理由</th></tr>
+                <tr><td>ゲーム・ロブロックス・マイクラ</td><td>デジタネが圧倒的（検索合計1億超）</td></tr>
+                <tr><td>スクラッチ</td><td>コエテコ・リタリコが強い</td></tr>
+                <tr><td>プログラミング教室（地域名）</td><td>コエテコが4,200万検索で支配的</td></tr>
+                <tr><td>unity</td><td>技術者向けで子育て層と乖離</td></tr>
+            </table>
+
+            <h3>競合との差別化マトリクス</h3>
+            <table>
+                <tr><th>競合</th><th>強み</th><th>できたよ！の差別化</th></tr>
+                <tr><td>コエテコ</td><td>教室口コミ・比較</td><td>「なぜプログラミングが良いか」の教育論</td></tr>
+                <tr><td>デジタネ</td><td>ゲーム攻略</td><td>ゲームではなく「成長」にフォーカス</td></tr>
+                <tr><td>リタリコ</td><td>発達支援</td><td>発達に関係なく「自己肯定感」を軸に</td></tr>
+                <tr><td>QUREO</td><td>教室CV直結</td><td>教室選びの前段階（親の悩み）を押さえる</td></tr>
+                <tr><td>TechKids</td><td>小学生プログラマー</td><td>「プログラマーにならなくても価値がある」</td></tr>
+            </table>
+
+            <div class="highlight-box">
+                <div class="title">できたよ！だけの切り口</div>
+                <div class="content">
+                    「プログラミングを学ぶ目的は、プログラマーになることではない。<br>
+                    自分で考え、試し、できた！と実感することで自己肯定感が育つ。」
+                </div>
+            </div>
+
+            <h3>記事の役割分担</h3>
+            <table>
+                <tr><th>記事カテゴリ</th><th>優先度</th><th>目的</th><th>例</th></tr>
+                <tr><td>自己肯定感・非認知能力</td><td><span class="tag tag-green">◎</span></td><td>集客（競合が弱い）</td><td>「自己肯定感とは」「子供の褒め方」</td></tr>
+                <tr><td>プログラミング × 自己肯定感</td><td><span class="tag tag-green">◎</span></td><td>橋渡し（独自ポジション）</td><td>「プログラミングで自己肯定感が育つ理由」</td></tr>
+                <tr><td>地域別教室ページ</td><td><span class="tag tag-green">◎</span></td><td>被リンク獲得＋収益化</td><td>「渋谷のプログラミング教室」</td></tr>
+                <tr><td>STEAM教育</td><td><span class="tag tag-orange">○</span></td><td>差別化・補完</td><td>「STEAM教育とは」</td></tr>
+            </table>
+
+            <h4>記事の流れ</h4>
+            <div class="flow-chart">
+                <div class="flow-step"><div class="step-content">自己肯定感の記事で集客</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">「プログラミングが自己肯定感に良い」記事で橋渡し</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">地域別教室紹介ページへ誘導</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">教室から被リンク獲得 + アフィリエイト収益</div></div>
+            </div>
+
+            <h3>地域ページ戦略</h3>
+
+            <h4>コエテコとの戦い方</h4>
+            <p>コエテコは198地域で1位を獲得しているが、正面から戦う。</p>
+            <table>
+                <tr><th>方針</th><th>詳細</th></tr>
+                <tr><td>主要都市から着手</td><td>東京・大阪・名古屋・福岡など人口が多い地域</td></tr>
+                <tr><td>検索ボリュームがあるKWを狙う</td><td>「地域名 + プログラミング教室」で勝負</td></tr>
+                <tr><td>無料掲載で教室数を増やす</td><td>実際に教室を掲載 → 被リンク獲得 → ドメインパワー向上</td></tr>
+                <tr><td>記事の切り口で差別化</td><td>「自己肯定感を育てる教室」という視点</td></tr>
+            </table>
+
+            <h4>キーワード戦略</h4>
+            <div class="code-block">◎ 「渋谷 プログラミング教室」
+   → ボリュームがある。コエテコが強いが、無料掲載で被リンクを獲得しながら戦う
+
+❌ 「渋谷 子供 自己肯定感 習い事」
+   → 検索ボリュームが少なすぎる</div>
+
+            <div class="highlight-box">
+                <div class="title">方針</div>
+                <div class="content">
+                    <strong>・</strong>検索ボリュームがある「地域名 + プログラミング教室」を狙う<br>
+                    <strong>・</strong>コエテコが強くても、無料掲載による被リンク獲得でドメインパワーを上げて勝負<br>
+                    <strong>・</strong>1位を取れなくても、上位表示されれば収益化は可能<br>
+                    <strong>・</strong>記事の切り口は「自己肯定感を育てる教室」で差別化
+                </div>
+            </div>
+
+            <h4>ドメインパワー成長シナリオ</h4>
+            <div class="flow-chart">
+                <div class="flow-step"><div class="step-content"><strong>【初期】</strong>ドメインパワー 0</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">無料掲載で教室を増やす（月20教室）<br>教室からの被リンク獲得（獲得率20-30%）</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content"><strong>【6ヶ月後】</strong>被リンク40件 → ドメインパワー上昇<br>地域KW「〇〇 プログラミング教室」で徐々に順位上昇</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content"><strong>【1年後】</strong>被リンク100件 → 主要地域で上位表示</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content"><strong>【2年後】</strong>被リンク200件 → コエテコと競合できるレベル</div></div>
+            </div>
+
+            <div class="highlight-box">
+                <div class="title">ポイント</div>
+                <div class="content">
+                    <strong>・</strong>最初からコエテコに勝てなくても問題ない<br>
+                    <strong>・</strong>被リンクを積み上げることでドメインパワーが徐々に上がる<br>
+                    <strong>・</strong>2年かけて地域KWで上位表示を狙う長期戦略
+                </div>
+            </div>
+
+            <h4>地域ページの構成</h4>
+            <div class="code-block">/schools/tokyo/shibuya/
+├── 地域の特徴（教育熱心な家庭が多い等）
+├── 自己肯定感を育てる教室の選び方
+├── 掲載教室一覧（無料掲載）
+│   ├── 教室A（詳細ページへ）
+│   ├── 教室B（詳細ページへ）
+│   └── ...
+└── 体験申込みCTA</div>
+
+            <h4>優先地域（Phase 1）</h4>
+            <table>
+                <tr><th>地域</th><th>理由</th></tr>
+                <tr><td>東京23区</td><td>人口最多・教室数も多い</td></tr>
+                <tr><td>横浜・川崎</td><td>東京近郊で教育熱心</td></tr>
+                <tr><td>大阪市</td><td>西日本最大</td></tr>
+                <tr><td>名古屋市</td><td>中部最大</td></tr>
+                <tr><td>福岡市</td><td>九州最大・IT企業も多い</td></tr>
+            </table>
+            <p><strong>→ まずは主要5都市で50教室掲載を目指す</strong></p>
+
+            <h3>記事優先順位</h3>
+
+            <h4>Phase 1: 基盤構築（最初の30記事）</h4>
+            <p><strong>ピラーページ（4本）</strong></p>
+            <ol>
+                <li>自己肯定感とは？子供の自信を育てる方法【完全ガイド】</li>
+                <li>非認知能力とは？子供の将来を左右する力の育て方</li>
+                <li>STEAM教育とは？プログラミングだけじゃない新しい学び</li>
+                <li>子供のプログラミング教育｜始める前に知っておきたいこと</li>
+            </ol>
+
+            <p><strong>クラスター記事（26本）</strong></p>
+            <table>
+                <tr><th>クラスター</th><th>記事タイトル</th></tr>
+                <tr><td rowspan="6">自己肯定感</td><td>自己肯定感が低い子供の特徴と原因</td></tr>
+                <tr><td>子供の自己肯定感を高める声かけ10選</td></tr>
+                <tr><td>自己肯定感チェックリスト【子供向け】</td></tr>
+                <tr><td>褒め方のコツ｜逆効果になる褒め方とは</td></tr>
+                <tr><td>自己肯定感と学力の関係</td></tr>
+                <tr><td>発達障害と自己肯定感</td></tr>
+                <tr><td rowspan="4">非認知能力</td><td>非認知能力の種類と具体例</td></tr>
+                <tr><td>非認知能力を伸ばす遊び・習い事</td></tr>
+                <tr><td>非認知能力と学力の関係</td></tr>
+                <tr><td>幼児期の非認知能力の育て方</td></tr>
+                <tr><td rowspan="3">STEAM教育</td><td>STEAM教育の具体例と家庭でできること</td></tr>
+                <tr><td>STEAM教育とプログラミングの違い</td></tr>
+                <tr><td>STEAM教育のメリット・デメリット</td></tr>
+                <tr><td rowspan="4">プログラミング教育</td><td>プログラミング教育のメリット（自己肯定感視点）</td></tr>
+                <tr><td>何歳から始める？年齢別おすすめ</td></tr>
+                <tr><td>教室 vs 通信教育 どっちがいい？</td></tr>
+                <tr><td>子供が挫折しない教え方</td></tr>
+            </table>
+
+            <!-- 3. 競合分析 -->
+            <h2 id="competitor">3. 競合分析（コエテコ）</h2>
+
+            <table>
+                <tr><th>項目</th><th>内容</th></tr>
+                <tr><td>サイト名</td><td>コエテコ (coeteco.jp)</td></tr>
+                <tr><td>事業内容</td><td>小学生向けプログラミングスクールのプラットフォーム</td></tr>
+                <tr><td>掲載教室数</td><td>全国13,000教室以上</td></tr>
+                <tr><td>SEO実績</td><td>198地域で検索1位獲得</td></tr>
+                <tr><td>掲載モデル</td><td>有料掲載</td></tr>
+            </table>
+
+            <h3>コエテコのSEO戦略</h3>
+            <div class="flow-chart">
+                <div class="flow-step"><div class="step-content">広域キーワード（情報系）で大量流入<br>・CapsLock解除（49,500検索/月）<br>・画像検索（823,000検索/月）</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">サイト内で教育系コンテンツへ誘導</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">地域ページでCV（教室申込み）<br>198地域で1位獲得</div></div>
+            </div>
+
+            <h3>検索意図の分布</h3>
+            <table>
+                <tr><th>分類</th><th>件数</th><th>割合</th></tr>
+                <tr><td>Know（情報収集）</td><td>769件</td><td>77%</td></tr>
+                <tr><td>Do（行動系）</td><td>98件</td><td>10%</td></tr>
+                <tr><td>Buy（購買検討）</td><td>75件</td><td>7.5%</td></tr>
+                <tr><td>Go（指名検索）</td><td>58件</td><td>5.5%</td></tr>
+            </table>
+
+            <h3>コエテコの弱点</h3>
+            <table>
+                <tr><th>弱点</th><th>詳細</th></tr>
+                <tr><td><span class="tag tag-red">CVに遠い83%</span></td><td>CapsLock解除で来た人はプログラミング教室に興味ない</td></tr>
+                <tr><td><span class="tag tag-red">広く浅い</span></td><td>どのカテゴリも「専門サイト」ではない（E-E-A-T弱い）</td></tr>
+                <tr><td><span class="tag tag-red">ネガティブ記事不可</span></td><td>教室を掲載してもらう立場</td></tr>
+                <tr><td><span class="tag tag-red">ターゲット曖昧</span></td><td>67.7%が「一般」=誰に向けて書いているか不明確</td></tr>
+            </table>
+
+            <!-- 4. 弱者の戦略 -->
+            <h2 id="underdog">4. 弱者の戦略</h2>
+
+            <div class="highlight-box">
+                <div class="title">基本原則</div>
+                <div class="content">
+                    <strong>原則1:</strong> 戦う場所を選ぶ（ニッチを攻める）<br>
+                    <strong>原則2:</strong> 深さで勝つ（広さでは勝てない）<br>
+                    <strong>原則3:</strong> CVに近いところから攻める（遠回りしない）
+                </div>
+            </div>
+
+            <h3>コエテコと正面衝突しない</h3>
+            <table>
+                <tr><th>項目</th><th>コエテコ</th><th>あなた</th></tr>
+                <tr><td>ドメインパワー</td><td>高</td><td>0からスタート</td></tr>
+                <tr><td>記事数</td><td>1,000+</td><td>少数精鋭</td></tr>
+                <tr><td>戦い方</td><td>100万人に1%刺さる</td><td><strong>1万人に30%刺さる</strong></td></tr>
+            </table>
+
+            <h3>やらないこと</h3>
+            <div class="checklist">
+                <div class="checklist-item"><span style="color: #ff6363; margin-right: 12px;">❌</span>「プログラミングとは」のような情報記事</div>
+                <div class="checklist-item"><span style="color: #ff6363; margin-right: 12px;">❌</span>「CapsLock 解除」のような関係ないトラフィック</div>
+                <div class="checklist-item"><span style="color: #ff6363; margin-right: 12px;">❌</span>全国の地域ページを作る</div>
+                <div class="checklist-item"><span style="color: #ff6363; margin-right: 12px;">❌</span>1000記事を目指す</div>
+                <div class="checklist-item"><span style="color: #ff6363; margin-right: 12px;">❌</span>コエテコと同じキーワードで正面衝突</div>
+            </div>
+
+            <!-- 5. 差別化ポイント -->
+            <h2 id="differentiation">5. あなたの差別化ポイント</h2>
+
+            <h3>コエテコとの違い</h3>
+            <table>
+                <tr><th>項目</th><th>コエテコ</th><th>あなた</th></tr>
+                <tr><td>コンセプト</td><td>教室を探す</td><td><span class="tag tag-green">子供の自己肯定感を高める</span></td></tr>
+                <tr><td>専門性</td><td>プログラミング教室一覧</td><td><span class="tag tag-green">教育心理学 × 自己肯定感</span></td></tr>
+                <tr><td>ターゲット</td><td>「教室を探している人」</td><td><span class="tag tag-green">「子供に自信をつけさせたい親」</span></td></tr>
+                <tr><td>掲載モデル</td><td>有料掲載</td><td><span class="tag tag-green">無料掲載</span></td></tr>
+                <tr><td>被リンク</td><td>教室からのリンクなし</td><td><span class="tag tag-green">教室からリンク獲得</span></td></tr>
+                <tr><td>記事の深さ</td><td>広く浅く</td><td><span class="tag tag-green">狭く深く</span></td></tr>
+            </table>
+
+            <h3>勝てる理由</h3>
+            <div class="highlight-box">
+                <div class="content">
+                    <strong>1.</strong> 無料掲載 → 教室が断る理由がない<br><br>
+                    <strong>2.</strong> 被リンク獲得 → ドメインパワーが自然に上がる<br><br>
+                    <strong>3.</strong> 教育心理学 × 自己肯定感 → コエテコにない専門性<br><br>
+                    <strong>4.</strong> 「教室を探す」ではなく「子供を救う」→ 情緒的価値
+                </div>
+            </div>
+
+            <!-- 6. 被リンク獲得戦略 -->
+            <h2 id="backlink">6. 被リンク獲得戦略</h2>
+
+            <h3>戦略の全体像</h3>
+            <div class="flow-chart">
+                <div class="flow-step"><div class="step-content">無料掲載</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">全国のプログラミング教室が登録</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">各教室が自分のサイトからリンクを貼る<br>「当教室は〇〇に掲載されています」</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">被リンク大量獲得</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">ドメインパワー急上昇 → SEOで勝てる</div></div>
+            </div>
+
+            <h3>プレスリリース活用の手順</h3>
+            <div class="code-block">Step 1: PR TIMESでプレスリリースを探す
+        https://prtimes.jp/
+        検索: 「プログラミング教室」「小学生 プログラミング」
+
+Step 2: 記事にして掲載（連絡なしで先に掲載）
+
+Step 3: サイトに実績ができたら教室に連絡
+
+Step 4: 被リンク獲得</div>
+
+            <h3>期待効果</h3>
+            <table>
+                <tr><th>項目</th><th>数値</th></tr>
+                <tr><td>被リンク獲得率</td><td>20-30%</td></tr>
+                <tr><td>月間連絡数</td><td>20件</td></tr>
+                <tr><td>月間被リンク</td><td>4-6件</td></tr>
+                <tr><td>6ヶ月後</td><td>24-36件の被リンク</td></tr>
+            </table>
+
+            <!-- 7. コンテンツ戦略 -->
+            <h2 id="content">7. コンテンツ戦略</h2>
+
+            <h3>サイト構造</h3>
+            <div class="code-block">あなたのサイト
+├── /about/             ← サイトについて
+├── /profile/           ← 運営者プロフィール
+│
+├── /articles/          ← 教育心理学の記事
+│   ├── 自己肯定感とは
+│   ├── 子供の自己肯定感が低い原因
+│   ├── 自己肯定感を高める方法
+│   ├── プログラミングと自己肯定感
+│   └── ...
+│
+├── /schools/           ← 教室掲載ページ
+│   ├── /tokyo/         ← 地域別
+│   ├── /osaka/
+│   └── ...
+│
+└── /register/          ← 無料掲載申込フォーム</div>
+
+            <h3>最低限必要なページ（被リンク獲得前に）</h3>
+            <table>
+                <tr><th>ページ</th><th>目的</th></tr>
+                <tr><td>サイトについて</td><td>「何のサイトか」を伝える</td></tr>
+                <tr><td>運営者プロフィール</td><td>信頼性を示す</td></tr>
+                <tr><td>自己肯定感とは</td><td>専門性を示す</td></tr>
+                <tr><td>プログラミングと自己肯定感</td><td>サイトの軸を示す</td></tr>
+                <tr><td>掲載について（無料）</td><td>教室向けの説明</td></tr>
+            </table>
+            <p><strong>→ この5ページがあれば、教室に連絡できる</strong></p>
+
+            <!-- 8. 資格 -->
+            <h2 id="qualification">8. 教育心理学の資格</h2>
+
+            <h3>おすすめ資格（取りやすさ順）</h3>
+            <table>
+                <tr><th>資格</th><th>難易度</th><th>期間</th><th>費用</th><th>E-E-A-T効果</th></tr>
+                <tr><td>チャイルドコーチングアドバイザー</td><td>★☆☆</td><td>1-3ヶ月</td><td>3-5万円</td><td>中</td></tr>
+                <tr><td>子育て心理カウンセラー</td><td>★☆☆</td><td>2-3ヶ月</td><td>3-5万円</td><td>中</td></tr>
+                <tr><td>発達心理学検定</td><td>★★☆</td><td>3-6ヶ月</td><td>1-2万円</td><td>中</td></tr>
+                <tr><td>認定心理士</td><td>★★★</td><td>大学で単位取得</td><td>数十万円</td><td>高</td></tr>
+                <tr><td>公認心理師</td><td>★★★★</td><td>大学院</td><td>数百万円</td><td>最高</td></tr>
+            </table>
+
+            <p><strong>→ 最初の3ヶ月で1つ取得をおすすめ</strong></p>
+
+            <!-- 9. 料金プラン -->
+            <h2 id="pricing">9. 無料掲載と有料プランの線引き</h2>
+
+            <h3>基本戦略</h3>
+            <div class="flow-chart">
+                <div class="flow-step"><div class="step-content"><strong>Phase 1（Year 1）:</strong> 全て無料<br>→ 被リンク獲得が最優先<br>→ 教室数を増やすことが目的</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content"><strong>Phase 2（Year 2〜）:</strong> 無料 + 有料オプション<br>→ 基本掲載は無料のまま<br>→ 付加価値に課金</div></div>
+            </div>
+
+            <h3>無料と有料の線引き</h3>
+            <table>
+                <tr><th>機能</th><th>無料</th><th>有料（月5,000〜1万円）</th></tr>
+                <tr><td>基本掲載</td><td>○</td><td>○</td></tr>
+                <tr><td>教室名・住所・連絡先</td><td>○</td><td>○</td></tr>
+                <tr><td>公式サイトへのリンク</td><td>○</td><td>○</td></tr>
+                <tr><td>写真掲載</td><td>1枚</td><td>10枚まで</td></tr>
+                <tr><td>教室紹介文</td><td>200文字</td><td>2000文字</td></tr>
+                <tr><td>特集記事</td><td>×</td><td>○（月1回）</td></tr>
+                <tr><td>トップページ掲載</td><td>×</td><td>○</td></tr>
+                <tr><td>地域ページ上位表示</td><td>×</td><td>○</td></tr>
+            </table>
+
+            <!-- 10. AI活用 -->
+            <h2 id="ai">10. AI活用と業務委託</h2>
+
+            <h3>タスク分担</h3>
+            <table>
+                <tr><th>タスク</th><th>担当</th><th>月間コスト</th></tr>
+                <tr><td>戦略・方針決定</td><td>あなた</td><td>-</td></tr>
+                <tr><td>教育心理学記事の企画・監修</td><td>あなた</td><td>-</td></tr>
+                <tr><td>教室紹介記事の作成</td><td>AI + 業務委託</td><td>5万円</td></tr>
+                <tr><td>連絡メール送信</td><td>業務委託</td><td>3万円</td></tr>
+                <tr><td>データ入力・更新</td><td>業務委託</td><td>3万円</td></tr>
+                <tr><td>SNS運用</td><td>AI + 業務委託</td><td>3万円</td></tr>
+                <tr><td>デザイン・画像作成</td><td>AI + 業務委託</td><td>3万円</td></tr>
+                <tr><td>経理・事務</td><td>業務委託</td><td>3万円</td></tr>
+                <tr><td><strong>合計</strong></td><td>-</td><td><strong>20万円</strong></td></tr>
+            </table>
+
+            <h3>AI活用ポイント</h3>
+            <table>
+                <tr><th>タスク</th><th>使うAI</th><th>効率化</th></tr>
+                <tr><td>記事の下書き</td><td>Claude / ChatGPT</td><td>90%時短</td></tr>
+                <tr><td>メール文作成</td><td>Claude / ChatGPT</td><td>80%時短</td></tr>
+                <tr><td>画像生成</td><td>Midjourney / DALL-E</td><td>90%時短</td></tr>
+                <tr><td>データ整理</td><td>Claude / ChatGPT</td><td>70%時短</td></tr>
+                <tr><td>SEO分析</td><td>Claude + ツール</td><td>60%時短</td></tr>
+            </table>
+
+            <!-- 11. 収益シミュレーション -->
+            <h2 id="revenue">11. 収益シミュレーション</h2>
+
+            <h3>月100万円の逆算</h3>
+            <table>
+                <tr><th>収益モデル</th><th>単価</th><th>月100万円に必要な数</th></tr>
+                <tr><td>アフィリエイト（体験申込）</td><td>3,000〜5,000円/件</td><td>200〜333件/月</td></tr>
+                <tr><td>送客手数料</td><td>1,000〜3,000円/件</td><td>333〜1,000件/月</td></tr>
+                <tr><td>記事広告</td><td>5〜10万円/本</td><td>10〜20本/月</td></tr>
+                <tr><td>教室からの月額掲載料</td><td>5,000円/月</td><td>200教室</td></tr>
+            </table>
+
+            <h3>推奨パターン: 複合型</h3>
+            <div class="highlight-box">
+                <div class="title">収益内訳</div>
+                <div class="content">
+                    <strong>アフィリエイト:</strong> 150件 × 5,000円 = 75万円<br>
+                    <strong>有料プラン:</strong> 50教室 × 5,000円 = 25万円<br>
+                    <strong>合計:</strong> 100万円/月<br><br>
+                    <strong>コスト:</strong> 業務委託20万円 + サーバー2万円 = 22万円<br>
+                    <strong>利益:</strong> 78万円/月
+                </div>
+            </div>
+
+            <h3>年次シミュレーション</h3>
+            <table>
+                <tr><th>期間</th><th>教室数</th><th>被リンク</th><th>PV</th><th>月間収益</th><th>月間利益</th></tr>
+                <tr><td>6ヶ月</td><td>200</td><td>40</td><td>20,000</td><td>5万円</td><td>-15万円</td></tr>
+                <tr><td>1年</td><td>500</td><td>100</td><td>50,000</td><td>20万円</td><td>0円</td></tr>
+                <tr><td>1.5年</td><td>800</td><td>150</td><td>100,000</td><td>50万円</td><td>30万円</td></tr>
+                <tr><td><strong>2年</strong></td><td><strong>1,000</strong></td><td><strong>200</strong></td><td><strong>150,000</strong></td><td><strong>100万円</strong></td><td><strong>78万円</strong></td></tr>
+            </table>
+
+            <!-- 12. 実行スケジュール -->
+            <h2 id="schedule">12. 実行スケジュール</h2>
+
+            <h3>全体フロー</h3>
+            <div class="flow-chart">
+                <div class="flow-step"><div class="step-content">Phase 1: 土台作り（Week 1-4）</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">Phase 2: 被リンク獲得開始（Week 5〜）</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">Phase 3: コンテンツ拡充（継続）</div></div>
+                <div class="flow-arrow">↓</div>
+                <div class="flow-step"><div class="step-content">Phase 4: 収益化（6ヶ月後〜）</div></div>
+            </div>
+
+            <h3>週次タスク</h3>
+
+            <h4>Week 1: サイト立ち上げ</h4>
+            <div class="checklist">
+                <div class="checklist-item"><div class="checkbox"></div>サイト名・ドメインを決める</div>
+                <div class="checklist-item"><div class="checkbox"></div>サーバー契約・WordPress設置</div>
+                <div class="checklist-item"><div class="checkbox"></div>テーマ・デザイン設定</div>
+            </div>
+
+            <h4>Week 2: 基本ページ作成</h4>
+            <div class="checklist">
+                <div class="checklist-item"><div class="checkbox"></div>サイトについてページ</div>
+                <div class="checklist-item"><div class="checkbox"></div>運営者プロフィールページ</div>
+                <div class="checklist-item"><div class="checkbox"></div>掲載について（無料）ページ</div>
+            </div>
+
+            <h4>Week 3: 記事作成</h4>
+            <div class="checklist">
+                <div class="checklist-item"><div class="checkbox"></div>自己肯定感とは（記事1）</div>
+                <div class="checklist-item"><div class="checkbox"></div>子供の自己肯定感が低い原因（記事2）</div>
+                <div class="checklist-item"><div class="checkbox"></div>自己肯定感を高める方法（記事3）</div>
+                <div class="checklist-item"><div class="checkbox"></div>プログラミングと自己肯定感（記事4）</div>
+                <div class="checklist-item"><div class="checkbox"></div>習い事で自己肯定感を高める（記事5）</div>
+            </div>
+
+            <h4>Week 4: 教室掲載（連絡なし）</h4>
+            <div class="checklist">
+                <div class="checklist-item"><div class="checkbox"></div>PR TIMESで教室リスト作成（20件）</div>
+                <div class="checklist-item"><div class="checkbox"></div>教室紹介記事作成（10件）</div>
+                <div class="checklist-item"><div class="checkbox"></div>教室掲載ページ整備</div>
+            </div>
+
+            <!-- 13. KPI目標 -->
+            <h2 id="kpi">13. KPI・目標設定</h2>
+
+            <h3>3ヶ月後の目標</h3>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">50</div>
+                    <div class="kpi-label">教室掲載数</div>
+                    <div class="kpi-period">3ヶ月後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">15</div>
+                    <div class="kpi-label">被リンク数</div>
+                    <div class="kpi-period">3ヶ月後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">30</div>
+                    <div class="kpi-label">記事数</div>
+                    <div class="kpi-period">3ヶ月後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">3,000</div>
+                    <div class="kpi-label">月間PV</div>
+                    <div class="kpi-period">3ヶ月後</div>
+                </div>
+            </div>
+
+            <h3>6ヶ月後の目標</h3>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">150</div>
+                    <div class="kpi-label">教室掲載数</div>
+                    <div class="kpi-period">6ヶ月後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">40</div>
+                    <div class="kpi-label">被リンク数</div>
+                    <div class="kpi-period">6ヶ月後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">60</div>
+                    <div class="kpi-label">記事数</div>
+                    <div class="kpi-period">6ヶ月後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">15,000</div>
+                    <div class="kpi-label">月間PV</div>
+                    <div class="kpi-period">6ヶ月後</div>
+                </div>
+            </div>
+
+            <h3>1年後の目標</h3>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-value">500</div>
+                    <div class="kpi-label">教室掲載数</div>
+                    <div class="kpi-period">1年後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">100</div>
+                    <div class="kpi-label">被リンク数</div>
+                    <div class="kpi-period">1年後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">100</div>
+                    <div class="kpi-label">記事数</div>
+                    <div class="kpi-period">1年後</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">50,000</div>
+                    <div class="kpi-label">月間PV</div>
+                    <div class="kpi-period">1年後</div>
+                </div>
+            </div>
+
+            <!-- 最重要メッセージ -->
+            <div class="important-message">
+                <div class="message-content">
+                    「プログラミング教室を探している人」を奪い合うのではなく、<br><br>
+                    <span class="highlight">「子供の自己肯定感に悩んでいる人」</span>を集めて、<br><br>
+                    その解決策としてプログラミング教室を提案する。<br><br>
+                    <strong>これがコエテコには絶対に真似できない戦略。</strong>
+                </div>
+            </div>
+
+            <h2>次にやること</h2>
+            <div class="checklist">
+                <div class="checklist-item"><div class="checkbox"></div><strong>サイト名・ドメインを決める</strong></div>
+                <div class="checklist-item"><div class="checkbox"></div><strong>サーバー契約・サイト立ち上げ</strong></div>
+                <div class="checklist-item"><div class="checkbox"></div><strong>基本ページ5つを作成</strong></div>
+                <div class="checklist-item"><div class="checkbox"></div><strong>PR TIMESで教室リストを作る</strong></div>
+            </div>
+
+            <div class="footer">
+                作成日: 2024年12月3日 | 最終更新: 2024年12月4日<br>
+                SEO戦略まとめ 完全版 - できたよ！プロジェクト
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // スクロールに応じてナビゲーションをハイライト
+        const sections = document.querySelectorAll('h2[id]');
+        const navItems = document.querySelectorAll('.nav-item[href^="#"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
