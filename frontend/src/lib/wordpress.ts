@@ -24,6 +24,12 @@ export const GET_POSTS = gql`
         slug
         date
         excerpt
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
       }
     }
   }
@@ -50,6 +56,12 @@ export interface Post {
   date: string;
   excerpt?: string;
   content?: string;
+  featuredImage?: {
+    node: {
+      sourceUrl: string;
+      altText?: string;
+    };
+  };
 }
 
 export interface PostsResponse {
@@ -70,6 +82,13 @@ export async function getPosts(): Promise<Post[]> {
 
 // 投稿詳細を取得する関数
 export async function getPostBySlug(slug: string): Promise<Post | null> {
-  const data = await client.request<PostResponse>(GET_POST_BY_SLUG, { slug });
-  return data.post;
+  try {
+    // URLデコードされたスラッグを使用
+    const decodedSlug = decodeURIComponent(slug);
+    const data = await client.request<PostResponse>(GET_POST_BY_SLUG, { slug: decodedSlug });
+    return data.post;
+  } catch (error) {
+    console.error("Error fetching post by slug:", slug, error);
+    return null;
+  }
 }
