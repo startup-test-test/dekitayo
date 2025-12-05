@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>できたよ！ プロジェクトWiki</title>
+  <style>
+    :root {
+      --primary: #FF6B35;
+      --primary-light: #FF8C5A;
+      --secondary: #1E3A5F;
+      --secondary-light: #2E4A6F;
+      --accent: #FFD93D;
+      --bg: #FEFEFE;
+      --surface: #F5F5F5;
+      --text: #333333;
+      --text-secondary: #666666;
+      --border: #E0E0E0;
+      --success: #4CAF50;
+      --warning: #FF9800;
+      --sidebar-width: 280px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+    }
+
+    /* サイドバー */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--secondary);
+      color: #fff;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 24px;
+      background: var(--secondary-light);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-header h1 {
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-header h1 span {
+      color: var(--accent);
+    }
+
+    .sidebar-header p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 4px;
+    }
+
+    .nav-section {
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .nav-section-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: rgba(255,255,255,0.5);
+      padding: 0 24px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 10px 24px;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    .nav-link.active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .nav-link .badge {
+      font-size: 10px;
+      background: var(--primary);
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 8px;
+    }
+
+    /* メインコンテンツ */
+    .main {
+      margin-left: var(--sidebar-width);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header h2 {
+      font-size: 18px;
+      color: var(--secondary);
+    }
+
+    .content {
+      padding: 32px;
+      max-width: 1000px;
+    }
+
+    /* セクション */
+    .section {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* タイポグラフィ */
+    h1 { font-size: 28px; margin-bottom: 24px; color: var(--secondary); }
+    h2 { font-size: 22px; margin: 32px 0 16px; color: var(--secondary); border-bottom: 2px solid var(--primary); padding-bottom: 8px; }
+    h3 { font-size: 18px; margin: 24px 0 12px; color: var(--text); }
+    h4 { font-size: 16px; margin: 16px 0 8px; color: var(--text); }
+    p { margin-bottom: 16px; }
+    ul, ol { margin-bottom: 16px; padding-left: 24px; }
+    li { margin-bottom: 8px; }
+
+    /* テーブル */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--surface);
+      font-weight: bold;
+      color: var(--secondary);
+    }
+
+    tr:hover {
+      background: rgba(255, 107, 53, 0.05);
+    }
+
+    /* コードブロック */
+    pre {
+      background: var(--secondary);
+      color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 24px;
+      font-family: 'Monaco', 'Consolas', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    code {
+      background: var(--surface);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Consolas', monospace;
+      font-size: 13px;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+    }
+
+    /* カード */
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--secondary);
+      margin-bottom: 12px;
+    }
+
+    /* ハイライトボックス */
+    .highlight-box {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: #fff;
+      padding: 24px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    .highlight-box h3 {
+      color: #fff;
+      margin-top: 0;
+    }
+
+    /* ステータスバッジ */
+    .status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .status-done {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .status-pending {
+      background: var(--border);
+      color: var(--text-secondary);
+    }
+
+    .status-progress {
+      background: var(--warning);
+      color: #fff;
+    }
+
+    /* カラーパレット */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .color-item {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .color-preview {
+      height: 60px;
+    }
+
+    .color-info {
+      padding: 12px;
+      background: #fff;
+      font-size: 12px;
+    }
+
+    .color-info strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* 検索 */
+    .search-box {
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .search-box input::placeholder {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .search-box input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* リスト装飾 */
+    .checklist {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .checklist li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .mobile-toggle {
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 56px;
+        height: 56px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 200;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      }
+    }
+
+    @media (min-width: 769px) {
+      .mobile-toggle {
+        display: none;
+      }
+    }
+
+    /* 目次 */
+    .toc {
+      background: var(--surface);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    .toc-title {
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: var(--secondary);
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc-list li {
+      margin-bottom: 6px;
+    }
+
+    .toc-list a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .toc-list a:hover {
+      text-decoration: underline;
+    }
+
+    /* 引用ボックス */
+    blockquote {
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      background: var(--surface);
+      margin: 16px 0;
+      font-style: italic;
+    }
+
+    /* フローチャート風 */
+    .flow-box {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .flow-arrow {
+      text-align: center;
+      font-size: 24px;
+      color: var(--primary);
+      margin: 8px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- サイドバー -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <h1>できたよ<span>!</span></h1>
+      <p>プロジェクトWiki</p>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="search" placeholder="検索..." onkeyup="filterNav()">
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">基本情報</div>
+      <a class="nav-link active" onclick="showSection('home')">ホーム</a>
+      <a class="nav-link" onclick="showSection('self-understanding')">自己理解</a>
+      <a class="nav-link" onclick="showSection('strategy')">事業戦略</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">設計</div>
+      <a class="nav-link" onclick="showSection('sitemap')">サイトマップ</a>
+      <a class="nav-link" onclick="showSection('pages')">ページ一覧</a>
+      <a class="nav-link" onclick="showSection('wireframe')">ワイヤーフレーム</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">デザイン</div>
+      <a class="nav-link" onclick="showSection('design-concept')">デザインコンセプト</a>
+      <a class="nav-link" onclick="showSection('design-guideline')">デザインガイドライン</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">技術</div>
+      <a class="nav-link" onclick="showSection('tech')">技術構成</a>
+      <a class="nav-link" onclick="showSection('cms-setup')">ヘッドレスCMS構築</a>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-title">運用</div>
+      <a class="nav-link" onclick="showSection('tasks')">タスク一覧</a>
+      <a class="nav-link" onclick="showSection('press')">プレスリリース手順</a>
+    </div>
+  </nav>
+
+  <!-- モバイルトグル -->
+  <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+
+  <!-- メインコンテンツ -->
+  <main class="main">
+    <header class="header">
+      <h2 id="current-section-title">ホーム</h2>
+    </header>
+
+    <div class="content">
+      <!-- ホーム -->
+      <div class="section active" id="home">
+        <h1>できたよ！ プロジェクトWiki</h1>
+
+        <div class="highlight-box">
+          <h3>ビジョン</h3>
+          <p style="font-size: 18px; margin: 0;">「一人ひとりの『ものさし』で、生きられる世界をつくる」</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">プロジェクト概要</div>
+          <p>子供の自己肯定感を高めるプログラミング教室ガイド「できたよ！」のプロジェクト資料です。</p>
+          <table>
+            <tr><th>項目</th><th>内容</th></tr>
+            <tr><td>サイト名</td><td>できたよ！</td></tr>
+            <tr><td>ドメイン</td><td>dekitayo.jp</td></tr>
+            <tr><td>コンセプト</td><td>自己肯定感が低い子供を、プログラミングで輝かせる</td></tr>
+            <tr><td>技術構成</td><td>WordPress（ヘッドレス）+ Next.js</td></tr>
+          </table>
+        </div>
+
+        <h2>ドキュメント一覧</h2>
+        <table>
+          <tr><th>カテゴリ</th><th>ドキュメント</th><th>説明</th></tr>
+          <tr><td>基本情報</td><td>自己理解</td><td>運営者の価値観・強み・ビジョン</td></tr>
+          <tr><td>基本情報</td><td>事業戦略</td><td>SEO戦略・競合分析・収益モデル</td></tr>
+          <tr><td>設計</td><td>サイトマップ</td><td>URL構造・ページ階層</td></tr>
+          <tr><td>設計</td><td>ページ一覧</td><td>全ページリスト・優先度</td></tr>
+          <tr><td>設計</td><td>ワイヤーフレーム</td><td>各ページのレイアウト設計</td></tr>
+          <tr><td>デザイン</td><td>デザインコンセプト</td><td>コンセプト・カラー・トーン</td></tr>
+          <tr><td>デザイン</td><td>デザインガイドライン</td><td>カラーパレット・タイポグラフィ</td></tr>
+          <tr><td>技術</td><td>技術構成</td><td>アーキテクチャ・ツール選定</td></tr>
+          <tr><td>技術</td><td>ヘッドレスCMS構築</td><td>WordPress + Next.js構築手順</td></tr>
+          <tr><td>運用</td><td>タスク一覧</td><td>実行タスク・進捗管理</td></tr>
+          <tr><td>運用</td><td>プレスリリース手順</td><td>PR配信の手順・テンプレート</td></tr>
+        </table>
+      </div>
+
+      <!-- 自己理解 -->
+      <div class="section" id="self-understanding">
+        <h1>自己理解プログラム</h1>
+
+        <div class="highlight-box">
+          <h3>最終的なゴール</h3>
+          <p style="margin: 0;">誰もが自分の強みだけで生きていける「自立の仕組み」を完成させる</p>
+        </div>
+
+        <h2>ビジョン</h2>
+        <div class="card">
+          <p style="font-size: 20px; font-weight: bold; text-align: center;">「一人ひとりの『ものさし』で、生きられる世界をつくる」</p>
+          <p>学歴や偏差値という「社会のものさし」ではなく、自分の強みや個性という「自分のものさし」で評価される世界。誰もが自分らしく生きられる社会。</p>
+        </div>
+
+        <h2>仕事の目的</h2>
+        <div class="card">
+          <p><strong>諦めている状態の対象を → 自分らしい戦略を見つけて、自由に選べる状態にする</strong></p>
+          <table>
+            <tr><th>Before（諦めている状態）</th><th>After（自由に選べる状態）</th></tr>
+            <tr><td>自分には無理だと思っている</td><td>自分の強みを活かせる</td></tr>
+            <tr><td>選択肢がないと感じている</td><td>選択肢が増える</td></tr>
+            <tr><td>自己肯定感が低い</td><td>自信を持って決断できる</td></tr>
+          </table>
+        </div>
+
+        <h2>価値観 TOP5</h2>
+        <table>
+          <tr><th>順位</th><th>価値観</th><th>キーワード</th></tr>
+          <tr><td>1位</td><td>自由</td><td>自分で選択できる、束縛されない</td></tr>
+          <tr><td>2位</td><td>希望</td><td>未来に期待できる、可能性がある</td></tr>
+          <tr><td>3位</td><td>夢中</td><td>没頭できる、時間を忘れる</td></tr>
+          <tr><td>4位</td><td>好奇心</td><td>新しいことを知りたい、学びたい</td></tr>
+          <tr><td>5位</td><td>安心</td><td>不安がない、安定している</td></tr>
+        </table>
+
+        <h2>ストレングスファインダー TOP14</h2>
+        <table>
+          <tr><th>順位</th><th>資質</th><th>説明</th></tr>
+          <tr><td>1</td><td>最上志向</td><td>平均ではなく卓越を求める</td></tr>
+          <tr><td>2</td><td>分析思考</td><td>データや事実に基づいて判断する</td></tr>
+          <tr><td>3</td><td>適応性</td><td>変化に柔軟に対応する</td></tr>
+          <tr><td>4</td><td>着想</td><td>新しいアイデアを生み出す</td></tr>
+          <tr><td>5</td><td>戦略性</td><td>複数の選択肢から最適解を見つける</td></tr>
+          <tr><td>6</td><td>自我</td><td>自分の存在価値を認められたい</td></tr>
+          <tr><td>7</td><td>未来志向</td><td>未来のビジョンを描く</td></tr>
+          <tr><td>8</td><td>目標志向</td><td>明確なゴールに向かって進む</td></tr>
+          <tr><td>9</td><td>内省</td><td>自分自身について深く考える</td></tr>
+          <tr><td>10</td><td>原点思考</td><td>過去から学び、本質を見抜く</td></tr>
+          <tr><td>11</td><td>親密性</td><td>深い人間関係を築く</td></tr>
+          <tr><td>12</td><td>自己確信</td><td>自分の判断を信じる</td></tr>
+          <tr><td>13</td><td>社交性</td><td>新しい人と出会うことを楽しむ</td></tr>
+          <tr><td>14</td><td>収集心</td><td>情報を集めることが好き</td></tr>
+        </table>
+
+        <h2>長所パターン TOP5</h2>
+        <ol>
+          <li>戦略やアイデアを練るために、1人で深く思考する時間や環境を作る</li>
+          <li>失敗しないように、成功事例を調査して分析し、真似する</li>
+          <li>目的を達成するために、計画を明確にする</li>
+          <li>複雑な情報を分析して、相手が判断しやすい情報にする</li>
+          <li>未来の理想像から逆算し、具体的な数値目標やタスクを設定する</li>
+        </ol>
+
+        <h2>本当にやりたいこと</h2>
+        <div class="card">
+          <p style="font-size: 18px; font-weight: bold;">教育心理学の成功事例を調べてユニークなアイデアを考えて提案する</p>
+          <ul>
+            <li><strong>得意なこと（才能）</strong>：成功事例を調査・分析して、戦略を立てる</li>
+            <li><strong>好きなこと（興味）</strong>：教育心理学、自己肯定感、非認知能力</li>
+            <li><strong>大事なこと（価値観）</strong>：自由、希望、夢中</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 事業戦略 -->
+      <div class="section" id="strategy">
+        <h1>SEO戦略まとめ</h1>
+
+        <div class="highlight-box">
+          <h3>ビジネスモデル</h3>
+          <p style="margin: 0;">「自己肯定感が低い子供を、プログラミングで輝かせる」</p>
+        </div>
+
+        <h2>勝ち筋の要約</h2>
+        <pre>自己肯定感（109万検索） × 子育て・教育 × プログラミング教室紹介
+         ↓
+   競合が手薄な領域で集客 → 教室アフィリエイトで収益化</pre>
+
+        <h2>狙うべきカテゴリ</h2>
+        <h3>◎ 最優先（競合が弱い）</h3>
+        <table>
+          <tr><th>カテゴリ</th><th>月間検索</th><th>狙う理由</th></tr>
+          <tr><td>自己肯定感</td><td>109万</td><td>ビジョン直結。専門サイトが少ない</td></tr>
+          <tr><td>非認知能力</td><td>30万</td><td>教育専門用語で競合少</td></tr>
+          <tr><td>STEAM教育</td><td>13万</td><td>プログラミング以外の切り口</td></tr>
+        </table>
+
+        <h3>× 避けるべきカテゴリ</h3>
+        <table>
+          <tr><th>カテゴリ</th><th>理由</th></tr>
+          <tr><td>ゲーム・ロブロックス・マイクラ</td><td>デジタネが圧倒的</td></tr>
+          <tr><td>スクラッチ</td><td>コエテコ・リタリコが強い</td></tr>
+          <tr><td>プログラミング教室（地域名）</td><td>コエテコが支配的</td></tr>
+        </table>
+
+        <h2>競合との差別化</h2>
+        <table>
+          <tr><th>項目</th><th>コエテコ</th><th>できたよ！</th></tr>
+          <tr><td>コンセプト</td><td>教室を探す</td><td>子供の自己肯定感を高める</td></tr>
+          <tr><td>専門性</td><td>プログラミング教室一覧</td><td>教育心理学 × 自己肯定感</td></tr>
+          <tr><td>ターゲット</td><td>教室を探している人</td><td>子供に自信をつけさせたい親</td></tr>
+          <tr><td>掲載モデル</td><td>有料掲載</td><td><strong>無料掲載</strong></td></tr>
+          <tr><td>被リンク</td><td>教室からのリンクなし</td><td><strong>教室からリンク獲得</strong></td></tr>
+        </table>
+
+        <h2>被リンク獲得戦略</h2>
+        <div class="flow-box">無料掲載</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">全国のプログラミング教室が登録</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">各教室が自分のサイトからリンクを貼る<br>「当教室は〇〇に掲載されています」</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">被リンク大量獲得</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">ドメインパワー急上昇</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-box">SEOで勝てる</div>
+
+        <h2>収益シミュレーション</h2>
+        <table>
+          <tr><th>期間</th><th>教室数</th><th>被リンク</th><th>PV</th><th>月間収益</th></tr>
+          <tr><td>6ヶ月</td><td>200</td><td>40</td><td>20,000</td><td>5万円</td></tr>
+          <tr><td>1年</td><td>500</td><td>100</td><td>50,000</td><td>20万円</td></tr>
+          <tr><td>1.5年</td><td>800</td><td>150</td><td>100,000</td><td>50万円</td></tr>
+          <tr><td><strong>2年</strong></td><td><strong>1,000</strong></td><td><strong>200</strong></td><td><strong>150,000</strong></td><td><strong>100万円</strong></td></tr>
+        </table>
+      </div>
+
+      <!-- サイトマップ -->
+      <div class="section" id="sitemap">
+        <h1>サイトマップ設計</h1>
+
+        <h2>URL構造</h2>
+        <pre>dekitayo.jp/
+│
+├── /                        ← トップページ
+│
+│  ━━━ 記事 ━━━
+│
+├── /self-esteem/            ← 自己肯定感
+│   └── /{記事名}/
+│
+├── /non-cognitive/          ← 非認知能力
+│   └── /{記事名}/
+│
+├── /books/                  ← 書籍レビュー
+│   └── /{書籍名}/
+│
+├── /column/                 ← コラム・体験談
+│   └── /{記事名}/
+│
+├── /media/                  ← メディア・プレスリリース
+│   └── /{記事名}/
+│
+│  ━━━ 教室 ━━━
+│
+├── /area/{都道府県}/{市区町村}/  ← 地域ページ
+│   例: /area/tokyo/shibuya/
+│
+├── /listing/                ← 無料掲載案内
+│
+│  ━━━ 信頼性・法的 ━━━
+│
+├── /about/                  ← 運営者情報
+├── /company/                ← 会社概要
+├── /contact/                ← お問い合わせ
+├── /privacy/                ← プライバシーポリシー
+└── /terms/                  ← 利用規約</pre>
+
+        <h2>ページ一覧</h2>
+        <table>
+          <tr><th>ページ</th><th>URL</th><th>役割</th></tr>
+          <tr><td>トップ</td><td>/</td><td>サイトの顔</td></tr>
+          <tr><td>自己肯定感</td><td>/self-esteem/</td><td>検索流入（主力）</td></tr>
+          <tr><td>非認知能力</td><td>/non-cognitive/</td><td>検索流入（主力）</td></tr>
+          <tr><td>書籍レビュー</td><td>/books/</td><td>E-E-A-T強化</td></tr>
+          <tr><td>コラム</td><td>/column/</td><td>体験談など</td></tr>
+          <tr><td>メディア</td><td>/media/</td><td>プレスリリース転載</td></tr>
+          <tr><td>地域ページ</td><td>/area/〇〇/〇〇/</td><td>教室紹介 + 被リンク獲得</td></tr>
+          <tr><td>無料掲載案内</td><td>/listing/</td><td>教室への案内</td></tr>
+          <tr><td>運営者情報</td><td>/about/</td><td>信頼性</td></tr>
+        </table>
+
+        <h2>優先度</h2>
+        <h3>Phase 1：最初に作る</h3>
+        <ul>
+          <li>/ （トップ）</li>
+          <li>/about/ （運営者情報）</li>
+          <li>/privacy/ （プライバシーポリシー）</li>
+          <li>/contact/ （お問い合わせ）</li>
+        </ul>
+
+        <h3>Phase 2：記事を増やす</h3>
+        <ul>
+          <li>/self-esteem/</li>
+          <li>/non-cognitive/</li>
+          <li>/books/</li>
+          <li>/column/</li>
+        </ul>
+
+        <h3>Phase 3：教室掲載を始める</h3>
+        <ul>
+          <li>/listing/ （無料掲載案内）</li>
+          <li>/area/〇〇/〇〇/ （地域ページ）</li>
+          <li>/company/ （会社概要）</li>
+          <li>/terms/ （利用規約）</li>
+        </ul>
+      </div>
+
+      <!-- ページ一覧 -->
+      <div class="section" id="pages">
+        <h1>ページ一覧</h1>
+
+        <h2>全ページリスト</h2>
+        <table>
+          <tr><th>#</th><th>ページ名</th><th>URL</th><th>優先度</th><th>状態</th></tr>
+          <tr><td>1</td><td>トップ</td><td>/</td><td>Phase 1</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>2</td><td>運営者情報</td><td>/about/</td><td>Phase 1</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>3</td><td>プライバシーポリシー</td><td>/privacy/</td><td>Phase 1</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>4</td><td>お問い合わせ</td><td>/contact/</td><td>Phase 1</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>5</td><td>自己肯定感</td><td>/self-esteem/</td><td>Phase 2</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>6</td><td>非認知能力</td><td>/non-cognitive/</td><td>Phase 2</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>7</td><td>書籍レビュー</td><td>/books/</td><td>Phase 2</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>8</td><td>コラム</td><td>/column/</td><td>Phase 2</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>9</td><td>メディア</td><td>/media/</td><td>Phase 2</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>10</td><td>無料掲載案内</td><td>/listing/</td><td>Phase 3</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>11</td><td>地域ページ</td><td>/area/{都道府県}/{市区町村}/</td><td>Phase 3</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>12</td><td>会社概要</td><td>/company/</td><td>Phase 3</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>13</td><td>利用規約</td><td>/terms/</td><td>Phase 3</td><td><span class="status status-pending">未着手</span></td></tr>
+        </table>
+      </div>
+
+      <!-- ワイヤーフレーム -->
+      <div class="section" id="wireframe">
+        <h1>ワイヤーフレーム</h1>
+
+        <h2>トップページ</h2>
+        <pre>┌─────────────────────────────────────────────────────────┐
+│  ヘッダー                                                │
+│  ├── ロゴ（できたよ！）                                   │
+│  ├── ナビゲーション                                      │
+│  │   ├── 教室を探す                                     │
+│  │   ├── 記事                                          │
+│  │   └── 運営者情報                                     │
+│  └── お問い合わせボタン                                  │
+├─────────────────────────────────────────────────────────┤
+│  ヒーローセクション                                       │
+│  ├── キャッチコピー                                      │
+│  │   「子どもの"できた！"を増やす                         │
+│  │    プログラミング教室ガイド」                          │
+│  └── 教室を探すボタン / 記事を読むボタン                   │
+├─────────────────────────────────────────────────────────┤
+│  地域から探す                                            │
+│  ├── 東京都                                             │
+│  ├── 神奈川県                                           │
+│  ├── 大阪府                                             │
+│  └── その他の地域 →                                     │
+├─────────────────────────────────────────────────────────┤
+│  人気の記事                                              │
+│  ├── 記事カード1                                        │
+│  ├── 記事カード2                                        │
+│  ├── 記事カード3                                        │
+│  └── もっと見る →                                       │
+├─────────────────────────────────────────────────────────┤
+│  カテゴリから読む                                        │
+│  ├── 自己肯定感                                         │
+│  ├── 非認知能力                                         │
+│  ├── 書籍レビュー                                       │
+│  └── コラム                                             │
+├─────────────────────────────────────────────────────────┤
+│  運営者について                                          │
+│  ├── 写真 or イラスト                                   │
+│  ├── 簡単な自己紹介                                     │
+│  └── 詳しく見る →                                       │
+├─────────────────────────────────────────────────────────┤
+│  教室掲載のご案内                                        │
+│  ├── 「無料で掲載できます」                              │
+│  └── 掲載申し込みボタン                                  │
+├─────────────────────────────────────────────────────────┤
+│  フッター                                                │
+│  ├── ナビゲーション                                      │
+│  ├── 会社概要 / プライバシーポリシー / 利用規約            │
+│  └── コピーライト                                        │
+└─────────────────────────────────────────────────────────┘</pre>
+
+        <h2>記事一覧ページ</h2>
+        <pre>┌─────────────────────────────────────────────────────────┐
+│  ヘッダー（共通）                                        │
+├─────────────────────────────────────────────────────────┤
+│  ページタイトル                                          │
+│  「自己肯定感」の記事一覧                                 │
+├─────────────────────────────────────────────────────────┤
+│  記事カード（グリッド）                                   │
+│  ┌─────────┐ ┌─────────┐ ┌─────────┐                   │
+│  │ 記事1   │ │ 記事2   │ │ 記事3   │                   │
+│  │ サムネ  │ │ サムネ  │ │ サムネ  │                   │
+│  │ タイトル│ │ タイトル│ │ タイトル│                   │
+│  └─────────┘ └─────────┘ └─────────┘                   │
+├─────────────────────────────────────────────────────────┤
+│  ページネーション                                        │
+│  ← 1 2 3 4 5 →                                         │
+├─────────────────────────────────────────────────────────┤
+│  フッター（共通）                                        │
+└─────────────────────────────────────────────────────────┘</pre>
+
+        <h2>地域ページ</h2>
+        <pre>┌─────────────────────────────────────────────────────────┐
+│  ヘッダー（共通）                                        │
+├─────────────────────────────────────────────────────────┤
+│  パンくずリスト                                          │
+│  トップ > 東京都 > 渋谷区                                │
+├─────────────────────────────────────────────────────────┤
+│  ページタイトル                                          │
+│  「渋谷区のプログラミング教室一覧」                       │
+├─────────────────────────────────────────────────────────┤
+│  教室カード                                              │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │ 教室名                                           │   │
+│  │ ★4.2（Googleレビュー）                           │   │
+│  │ 住所 / 対象年齢 / 料金                           │   │
+│  │ → 公式サイト                                    │   │
+│  └─────────────────────────────────────────────────┘   │
+├─────────────────────────────────────────────────────────┤
+│  無料掲載のご案内                                        │
+│  「あなたの教室も掲載しませんか？」                       │
+├─────────────────────────────────────────────────────────┤
+│  フッター（共通）                                        │
+└─────────────────────────────────────────────────────────┘</pre>
+      </div>
+
+      <!-- デザインコンセプト -->
+      <div class="section" id="design-concept">
+        <h1>デザインコンセプト</h1>
+
+        <div class="highlight-box">
+          <h3>コンセプト</h3>
+          <p style="margin: 0; font-size: 18px;">「達成感」— 子供の「できた！」の喜びの瞬間を表現する</p>
+        </div>
+
+        <h2>キーワード</h2>
+        <ul>
+          <li><strong>達成感</strong>：「できた！」の喜びの瞬間</li>
+          <li><strong>温かみ</strong>：親しみやすく、安心感がある</li>
+          <li><strong>信頼感</strong>：専門性があり、信頼できる</li>
+          <li><strong>前向き</strong>：明るく、希望がある</li>
+          <li><strong>成長</strong>：子供の可能性が広がるイメージ</li>
+        </ul>
+
+        <h2>カラー案 比較</h2>
+
+        <!-- 案A：オレンジメイン（現案） -->
+        <h3>案A：オレンジメイン（現案）</h3>
+        <p style="color: #666; margin-bottom: 16px;">親しみやすさ重視。達成感・温かみを前面に。</p>
+        <div style="display: flex; gap: 0; margin-bottom: 24px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <div style="flex: 3; background: #FF6B35; color: white; padding: 20px;">
+            <strong>Primary</strong><br>#FF6B35<br>
+            <span style="font-size: 12px;">ボタン・CTA・ロゴ</span>
+          </div>
+          <div style="flex: 2; background: #1E3A5F; color: white; padding: 20px;">
+            <strong>Secondary</strong><br>#1E3A5F<br>
+            <span style="font-size: 12px;">ヘッダー・見出し</span>
+          </div>
+          <div style="flex: 1; background: #FFD93D; color: #333; padding: 20px;">
+            <strong>Accent</strong><br>#FFD93D
+          </div>
+        </div>
+
+        <!-- プレビュー：案A -->
+        <div style="border: 1px solid #E0E0E0; border-radius: 8px; overflow: hidden; margin-bottom: 32px;">
+          <div style="background: #1E3A5F; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: bold;">できたよ<span style="color: #FFD93D;">!</span></span>
+            <div style="display: flex; gap: 16px; font-size: 14px;">
+              <span>教室を探す</span>
+              <span>記事</span>
+              <span style="background: #FF6B35; padding: 6px 16px; border-radius: 4px;">お問い合わせ</span>
+            </div>
+          </div>
+          <div style="padding: 32px; background: #FEFEFE;">
+            <h4 style="color: #1E3A5F; border-bottom: 2px solid #FF6B35; padding-bottom: 8px; margin-bottom: 16px;">子どもの"できた！"を増やす</h4>
+            <p style="color: #333; margin-bottom: 16px;">自己肯定感を高めるプログラミング教室ガイド</p>
+            <button style="background: #FF6B35; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer;">教室を探す</button>
+            <button style="background: white; color: #1E3A5F; border: 2px solid #1E3A5F; padding: 10px 24px; border-radius: 6px; font-weight: bold; margin-left: 8px; cursor: pointer;">記事を読む</button>
+          </div>
+        </div>
+
+        <!-- 案B：ネイビー強化（信頼感UP） -->
+        <h3>案B：ネイビー強化（信頼感UP）</h3>
+        <p style="color: #666; margin-bottom: 16px;">信頼感重視。ネイビーの比率を上げて専門性を強調。</p>
+        <div style="display: flex; gap: 0; margin-bottom: 24px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <div style="flex: 2; background: #1E3A5F; color: white; padding: 20px;">
+            <strong>Primary</strong><br>#1E3A5F<br>
+            <span style="font-size: 12px;">ヘッダー・見出し・メイン</span>
+          </div>
+          <div style="flex: 2; background: #FF6B35; color: white; padding: 20px;">
+            <strong>Accent</strong><br>#FF6B35<br>
+            <span style="font-size: 12px;">ボタン・CTA</span>
+          </div>
+          <div style="flex: 1; background: #FFD93D; color: #333; padding: 20px;">
+            <strong>Highlight</strong><br>#FFD93D
+          </div>
+        </div>
+
+        <!-- プレビュー：案B -->
+        <div style="border: 1px solid #E0E0E0; border-radius: 8px; overflow: hidden; margin-bottom: 32px;">
+          <div style="background: #1E3A5F; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: bold;">できたよ<span style="color: #FF6B35;">!</span></span>
+            <div style="display: flex; gap: 16px; font-size: 14px;">
+              <span>教室を探す</span>
+              <span>記事</span>
+              <span style="background: #FF6B35; padding: 6px 16px; border-radius: 4px;">お問い合わせ</span>
+            </div>
+          </div>
+          <div style="padding: 32px; background: #FEFEFE;">
+            <h4 style="color: #1E3A5F; border-bottom: 3px solid #1E3A5F; padding-bottom: 8px; margin-bottom: 16px;">子どもの"できた！"を増やす</h4>
+            <p style="color: #333; margin-bottom: 16px;">自己肯定感を高めるプログラミング教室ガイド</p>
+            <button style="background: #FF6B35; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer;">教室を探す</button>
+            <button style="background: #1E3A5F; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; margin-left: 8px; cursor: pointer;">記事を読む</button>
+          </div>
+        </div>
+
+        <!-- 案C：ダークブルー（より落ち着いた信頼感） -->
+        <h3>案C：ダークブルー（より落ち着いた印象）</h3>
+        <p style="color: #666; margin-bottom: 16px;">専門性・権威を重視。大人向けの落ち着いた印象。</p>
+        <div style="display: flex; gap: 0; margin-bottom: 24px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <div style="flex: 2; background: #2C3E50; color: white; padding: 20px;">
+            <strong>Primary</strong><br>#2C3E50<br>
+            <span style="font-size: 12px;">ヘッダー・見出し・メイン</span>
+          </div>
+          <div style="flex: 2; background: #FF6B35; color: white; padding: 20px;">
+            <strong>Accent</strong><br>#FF6B35<br>
+            <span style="font-size: 12px;">ボタン・CTA</span>
+          </div>
+          <div style="flex: 1; background: #3498DB; color: white; padding: 20px;">
+            <strong>Sub</strong><br>#3498DB
+          </div>
+        </div>
+
+        <!-- プレビュー：案C -->
+        <div style="border: 1px solid #E0E0E0; border-radius: 8px; overflow: hidden; margin-bottom: 32px;">
+          <div style="background: #2C3E50; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: bold;">できたよ<span style="color: #FF6B35;">!</span></span>
+            <div style="display: flex; gap: 16px; font-size: 14px;">
+              <span>教室を探す</span>
+              <span>記事</span>
+              <span style="background: #FF6B35; padding: 6px 16px; border-radius: 4px;">お問い合わせ</span>
+            </div>
+          </div>
+          <div style="padding: 32px; background: #FEFEFE;">
+            <h4 style="color: #2C3E50; border-bottom: 3px solid #2C3E50; padding-bottom: 8px; margin-bottom: 16px;">子どもの"できた！"を増やす</h4>
+            <p style="color: #333; margin-bottom: 16px;">自己肯定感を高めるプログラミング教室ガイド</p>
+            <button style="background: #FF6B35; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer;">教室を探す</button>
+            <button style="background: #2C3E50; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; margin-left: 8px; cursor: pointer;">記事を読む</button>
+          </div>
+        </div>
+
+        <!-- 案D：ティール（モダン・差別化） -->
+        <h3>案D：ティール（モダン・差別化）</h3>
+        <p style="color: #666; margin-bottom: 16px;">モダンで新鮮。競合と差別化しやすい。</p>
+        <div style="display: flex; gap: 0; margin-bottom: 24px; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <div style="flex: 2; background: #008080; color: white; padding: 20px;">
+            <strong>Primary</strong><br>#008080<br>
+            <span style="font-size: 12px;">ヘッダー・見出し・メイン</span>
+          </div>
+          <div style="flex: 2; background: #FF6B35; color: white; padding: 20px;">
+            <strong>Accent</strong><br>#FF6B35<br>
+            <span style="font-size: 12px;">ボタン・CTA</span>
+          </div>
+          <div style="flex: 1; background: #FFD93D; color: #333; padding: 20px;">
+            <strong>Highlight</strong><br>#FFD93D
+          </div>
+        </div>
+
+        <!-- プレビュー：案D -->
+        <div style="border: 1px solid #E0E0E0; border-radius: 8px; overflow: hidden; margin-bottom: 32px;">
+          <div style="background: #008080; color: white; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: bold;">できたよ<span style="color: #FFD93D;">!</span></span>
+            <div style="display: flex; gap: 16px; font-size: 14px;">
+              <span>教室を探す</span>
+              <span>記事</span>
+              <span style="background: #FF6B35; padding: 6px 16px; border-radius: 4px;">お問い合わせ</span>
+            </div>
+          </div>
+          <div style="padding: 32px; background: #FEFEFE;">
+            <h4 style="color: #008080; border-bottom: 3px solid #008080; padding-bottom: 8px; margin-bottom: 16px;">子どもの"できた！"を増やす</h4>
+            <p style="color: #333; margin-bottom: 16px;">自己肯定感を高めるプログラミング教室ガイド</p>
+            <button style="background: #FF6B35; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer;">教室を探す</button>
+            <button style="background: #008080; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; margin-left: 8px; cursor: pointer;">記事を読む</button>
+          </div>
+        </div>
+
+        <!-- 比較表 -->
+        <h3>案の比較</h3>
+        <table>
+          <tr>
+            <th>案</th>
+            <th>印象</th>
+            <th>親しみやすさ</th>
+            <th>信頼感</th>
+            <th>おすすめ</th>
+          </tr>
+          <tr>
+            <td><strong>A. オレンジメイン</strong></td>
+            <td>元気、温かみ</td>
+            <td>◎</td>
+            <td>○</td>
+            <td>親しみやすさ重視なら</td>
+          </tr>
+          <tr>
+            <td><strong>B. ネイビー強化</strong></td>
+            <td>バランス型</td>
+            <td>○</td>
+            <td>◎</td>
+            <td style="color: #FF6B35; font-weight: bold;">★ おすすめ</td>
+          </tr>
+          <tr>
+            <td><strong>C. ダークブルー</strong></td>
+            <td>落ち着き、専門性</td>
+            <td>△</td>
+            <td>◎</td>
+            <td>専門性重視なら</td>
+          </tr>
+          <tr>
+            <td><strong>D. ティール</strong></td>
+            <td>モダン、新鮮</td>
+            <td>○</td>
+            <td>○</td>
+            <td>差別化重視なら</td>
+          </tr>
+        </table>
+
+        <h2>現在のカラー設計</h2>
+
+        <h3>ベースカラー</h3>
+        <div class="color-grid">
+          <div class="color-item">
+            <div class="color-preview" style="background: #FEFEFE; border: 1px solid #E0E0E0;"></div>
+            <div class="color-info">
+              <strong>Background</strong>
+              #FEFEFE
+            </div>
+          </div>
+          <div class="color-item">
+            <div class="color-preview" style="background: #F5F5F5;"></div>
+            <div class="color-info">
+              <strong>Surface</strong>
+              #F5F5F5
+            </div>
+          </div>
+          <div class="color-item">
+            <div class="color-preview" style="background: #333333;"></div>
+            <div class="color-info">
+              <strong>Text</strong>
+              #333333
+            </div>
+          </div>
+          <div class="color-item">
+            <div class="color-preview" style="background: #666666;"></div>
+            <div class="color-info">
+              <strong>Text Secondary</strong>
+              #666666
+            </div>
+          </div>
+        </div>
+
+        <h2>ロゴ</h2>
+        <div class="card">
+          <div class="card-title">サイト名</div>
+          <p style="font-size: 24px; font-weight: bold;">できたよ<span style="color: #FFD93D;">!</span></p>
+          <p>「！」があることで喜び・達成感が伝わる。子供が嬉しそうに報告している感じが出る。</p>
+          <h4>イメージ案</h4>
+          <ul>
+            <li>「！」を星や光で表現</li>
+            <li>手を上げて喜ぶシルエット</li>
+            <li>チェックマーク + 笑顔</li>
+            <li>上向きの要素（成長・達成）</li>
+          </ul>
+        </div>
+
+        <h2>トーン＆マナー</h2>
+        <div class="card">
+          <p><strong>温かみがあるけど、信頼できる</strong></p>
+          <p><strong>親しみやすいけど、専門的</strong></p>
+          <p><strong>明るいけど、落ち着いている</strong></p>
+          <p style="color: var(--primary); margin-top: 16px;">→ 「子供向け」ではなく「親向け」のデザイン</p>
+        </div>
+
+        <h2>禁止事項</h2>
+        <ul>
+          <li><strong>子どもっぽすぎるデザイン</strong>：信頼性が下がる</li>
+          <li><strong>暗い・重い印象</strong>：コンセプトと矛盾</li>
+          <li><strong>複雑すぎるレイアウト</strong>：情報が伝わらない</li>
+          <li><strong>原色の多用</strong>：安っぽくなる</li>
+          <li><strong>過度な装飾</strong>：読みにくくなる</li>
+        </ul>
+      </div>
+
+      <!-- デザインガイドライン -->
+      <div class="section" id="design-guideline">
+        <h1>デザインガイドライン</h1>
+
+        <h2>カラーパレット</h2>
+        <h3>プライマリカラー</h3>
+        <table>
+          <tr><th>名前</th><th>カラーコード</th><th>用途</th></tr>
+          <tr><td>Primary</td><td>#FF6B35</td><td>メインボタン、リンク、ロゴ</td></tr>
+          <tr><td>Primary Light</td><td>#FF8C5A</td><td>ホバー時</td></tr>
+          <tr><td>Primary Dark</td><td>#E55A2B</td><td>アクティブ時</td></tr>
+        </table>
+
+        <h3>セカンダリカラー</h3>
+        <table>
+          <tr><th>名前</th><th>カラーコード</th><th>用途</th></tr>
+          <tr><td>Secondary</td><td>#1E3A5F</td><td>ヘッダー、フッター、サブボタン</td></tr>
+          <tr><td>Secondary Light</td><td>#2E4A6F</td><td>ホバー時</td></tr>
+          <tr><td>Secondary Dark</td><td>#0E2A4F</td><td>アクティブ時</td></tr>
+        </table>
+
+        <h3>アクセントカラー</h3>
+        <table>
+          <tr><th>名前</th><th>カラーコード</th><th>用途</th></tr>
+          <tr><td>Accent</td><td>#FFD93D</td><td>強調、注目要素、「！」マーク</td></tr>
+          <tr><td>Accent Light</td><td>#FFE566</td><td>背景のハイライト</td></tr>
+        </table>
+
+        <h3>状態カラー</h3>
+        <div class="color-grid">
+          <div class="color-item">
+            <div class="color-preview" style="background: #4CAF50;"></div>
+            <div class="color-info"><strong>Success</strong> #4CAF50</div>
+          </div>
+          <div class="color-item">
+            <div class="color-preview" style="background: #FF9800;"></div>
+            <div class="color-info"><strong>Warning</strong> #FF9800</div>
+          </div>
+          <div class="color-item">
+            <div class="color-preview" style="background: #F44336;"></div>
+            <div class="color-info"><strong>Error</strong> #F44336</div>
+          </div>
+          <div class="color-item">
+            <div class="color-preview" style="background: #2196F3;"></div>
+            <div class="color-info"><strong>Info</strong> #2196F3</div>
+          </div>
+        </div>
+
+        <h2>タイポグラフィ</h2>
+        <h3>フォントファミリー</h3>
+        <table>
+          <tr><th>用途</th><th>フォント</th></tr>
+          <tr><td>見出し</td><td>Noto Sans JP Bold</td></tr>
+          <tr><td>本文</td><td>Noto Sans JP Regular</td></tr>
+          <tr><td>ロゴ</td><td>丸ゴシック系 or カスタム</td></tr>
+        </table>
+
+        <h3>フォントサイズ</h3>
+        <table>
+          <tr><th>名前</th><th>サイズ</th><th>用途</th></tr>
+          <tr><td>xs</td><td>12px</td><td>注釈</td></tr>
+          <tr><td>sm</td><td>14px</td><td>キャプション</td></tr>
+          <tr><td>base</td><td>16px</td><td>本文</td></tr>
+          <tr><td>lg</td><td>18px</td><td>リード文</td></tr>
+          <tr><td>xl</td><td>20px</td><td>小見出し</td></tr>
+          <tr><td>2xl</td><td>24px</td><td>見出し3</td></tr>
+          <tr><td>3xl</td><td>30px</td><td>見出し2</td></tr>
+          <tr><td>4xl</td><td>36px</td><td>見出し1</td></tr>
+          <tr><td>5xl</td><td>48px</td><td>ヒーロー</td></tr>
+        </table>
+
+        <h2>スペーシング</h2>
+        <table>
+          <tr><th>名前</th><th>サイズ</th><th>用途</th></tr>
+          <tr><td>xs</td><td>4px</td><td>最小間隔</td></tr>
+          <tr><td>sm</td><td>8px</td><td>要素内余白</td></tr>
+          <tr><td>md</td><td>16px</td><td>標準間隔</td></tr>
+          <tr><td>lg</td><td>24px</td><td>セクション内</td></tr>
+          <tr><td>xl</td><td>32px</td><td>セクション間</td></tr>
+          <tr><td>2xl</td><td>48px</td><td>大セクション間</td></tr>
+          <tr><td>3xl</td><td>64px</td><td>ページ余白</td></tr>
+        </table>
+
+        <h2>ボーダー</h2>
+        <h3>角丸（border-radius）</h3>
+        <table>
+          <tr><th>名前</th><th>サイズ</th><th>用途</th></tr>
+          <tr><td>none</td><td>0px</td><td>なし</td></tr>
+          <tr><td>sm</td><td>4px</td><td>小さいボタン</td></tr>
+          <tr><td>md</td><td>8px</td><td>カード、ボタン</td></tr>
+          <tr><td>lg</td><td>12px</td><td>大きいカード</td></tr>
+          <tr><td>xl</td><td>16px</td><td>モーダル</td></tr>
+          <tr><td>full</td><td>9999px</td><td>丸ボタン</td></tr>
+        </table>
+
+        <h2>レスポンシブ</h2>
+        <h3>ブレークポイント</h3>
+        <table>
+          <tr><th>名前</th><th>幅</th><th>用途</th></tr>
+          <tr><td>sm</td><td>640px</td><td>モバイル</td></tr>
+          <tr><td>md</td><td>768px</td><td>タブレット</td></tr>
+          <tr><td>lg</td><td>1024px</td><td>小型PC</td></tr>
+          <tr><td>xl</td><td>1280px</td><td>デスクトップ</td></tr>
+          <tr><td>2xl</td><td>1536px</td><td>大画面</td></tr>
+        </table>
+      </div>
+
+      <!-- 技術構成 -->
+      <div class="section" id="tech">
+        <h1>技術構成</h1>
+
+        <h2>アーキテクチャ</h2>
+        <pre>┌─────────────────────────────────────────────────────────┐
+│  ヘッドレスCMS構成                                       │
+├─────────────────────────────────────────────────────────┤
+│                                                         │
+│  WordPress（Xserver）                                   │
+│  └── https://cms.dekitayo.jp                            │
+│  └── コンテンツ管理・API提供                             │
+│       ↓ REST API / GraphQL                             │
+│  Next.js（Vercel）                                      │
+│  └── https://dekitayo.jp                                │
+│  └── 表示・UI                                           │
+│                                                         │
+└─────────────────────────────────────────────────────────┘</pre>
+
+        <h3>ヘッドレスCMSのメリット</h3>
+        <table>
+          <tr><th>メリット</th><th>説明</th></tr>
+          <tr><td>表示速度</td><td>フロントが静的生成で高速</td></tr>
+          <tr><td>セキュリティ</td><td>WordPress管理画面が公開されない</td></tr>
+          <tr><td>自由度</td><td>デザイン・UIの自由度が高い</td></tr>
+          <tr><td>SEO</td><td>Core Web Vitals対策しやすい</td></tr>
+        </table>
+
+        <h2>バックエンド（CMS）</h2>
+        <table>
+          <tr><th>項目</th><th>選定</th></tr>
+          <tr><td>CMS</td><td>WordPress（ヘッドレス）</td></tr>
+          <tr><td>サーバー</td><td>Xserver</td></tr>
+          <tr><td>役割</td><td>コンテンツ管理、API提供</td></tr>
+        </table>
+
+        <h3>WordPressプラグイン</h3>
+        <table>
+          <tr><th>プラグイン</th><th>用途</th></tr>
+          <tr><td>WPGraphQL</td><td>GraphQL API提供</td></tr>
+          <tr><td>Advanced Custom Fields</td><td>カスタムフィールド</td></tr>
+          <tr><td>Yoast SEO</td><td>SEOメタデータ管理</td></tr>
+        </table>
+
+        <h2>フロントエンド</h2>
+        <table>
+          <tr><th>項目</th><th>選定</th></tr>
+          <tr><td>フレームワーク</td><td>Next.js</td></tr>
+          <tr><td>ホスティング</td><td>Vercel</td></tr>
+          <tr><td>言語</td><td>TypeScript</td></tr>
+        </table>
+
+        <h3>Next.jsを選んだ理由</h3>
+        <table>
+          <tr><th>理由</th><th>説明</th></tr>
+          <tr><td>SEOに強い</td><td>サーバーサイドレンダリング対応</td></tr>
+          <tr><td>情報が多い</td><td>困った時に調べやすい</td></tr>
+          <tr><td>Vercelと相性◎</td><td>デプロイが簡単、無料枠あり</td></tr>
+          <tr><td>WordPress連携実績多い</td><td>ヘッドレスCMSの定番構成</td></tr>
+        </table>
+
+        <h2>ホスティング</h2>
+        <table>
+          <tr><th>項目</th><th>選定</th><th>URL</th></tr>
+          <tr><td>WordPress</td><td>Xserver</td><td>https://cms.dekitayo.jp</td></tr>
+          <tr><td>フロント</td><td>Vercel</td><td>https://dekitayo.jp</td></tr>
+        </table>
+      </div>
+
+      <!-- ヘッドレスCMS構築 -->
+      <div class="section" id="cms-setup">
+        <h1>ヘッドレスCMS構築手順</h1>
+
+        <h2>構成図</h2>
+        <pre>┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│  WordPress（CMS）           Next.js（フロント）          │
+│  cms.dekitayo.jp    ───→   dekitayo.jp                 │
+│  Xserver                    Vercel                      │
+│                                                         │
+│  ・コンテンツ管理            ・表示・UI                  │
+│  ・GraphQL API提供           ・SSG/ISR                  │
+│  ・非公開（Basic認証）        ・公開サイト               │
+│                                                         │
+└─────────────────────────────────────────────────────────┘</pre>
+
+        <h2>Phase 1：インフラ準備</h2>
+        <h3>ドメイン設定</h3>
+        <table>
+          <tr><th>手順</th><th>作業内容</th><th>備考</th></tr>
+          <tr><td>1</td><td>ドメイン取得</td><td>dekitayo.jp（ムームードメイン）</td></tr>
+          <tr><td>2</td><td>ネームサーバー変更</td><td>Xserverに向ける</td></tr>
+          <tr><td>3</td><td>サブドメイン作成</td><td>cms.dekitayo.jp</td></tr>
+          <tr><td>4</td><td>DNS反映確認</td><td>1〜2時間待つ</td></tr>
+        </table>
+
+        <h2>Phase 2：WordPress構築</h2>
+        <h3>WordPressインストール</h3>
+        <ol>
+          <li>「WordPress簡単インストール」をクリック</li>
+          <li>対象ドメイン：cms.dekitayo.jp を選択</li>
+          <li>サイトURL、ブログ名、ユーザー名、パスワードを入力</li>
+          <li>「インストール」をクリック</li>
+        </ol>
+
+        <h3>WordPress初期設定</h3>
+        <table>
+          <tr><th>設定項目</th><th>操作</th></tr>
+          <tr><td>設定 → 表示設定</td><td>「検索エンジンがサイトをインデックスしないようにする」に✅</td></tr>
+          <tr><td>設定 → パーマリンク</td><td>「投稿名」を選択</td></tr>
+          <tr><td>プラグイン</td><td>Hello Dolly を削除</td></tr>
+        </table>
+
+        <h2>Phase 3：プラグインインストール</h2>
+        <table>
+          <tr><th>プラグイン</th><th>用途</th><th>インストール方法</th></tr>
+          <tr><td>WPGraphQL</td><td>GraphQL API提供</td><td>プラグイン検索</td></tr>
+          <tr><td>Advanced Custom Fields</td><td>カスタムフィールド</td><td>プラグイン検索</td></tr>
+          <tr><td>WPGraphQL for ACF</td><td>ACFをGraphQL対応</td><td>GitHub からダウンロード</td></tr>
+        </table>
+
+        <h2>Phase 6：Next.js連携</h2>
+        <h3>プロジェクト作成</h3>
+        <pre>npx create-next-app@latest dekitayo-frontend --typescript --tailwind --app
+cd dekitayo-frontend</pre>
+
+        <h3>環境変数設定</h3>
+        <pre>WORDPRESS_API_URL=https://cms.dekitayo.jp/graphql
+WORDPRESS_AUTH_USER=Basic認証ユーザー名
+WORDPRESS_AUTH_PASS=Basic認証パスワード</pre>
+
+        <h3>GraphQLクライアント設定</h3>
+        <pre>npm install graphql-request graphql</pre>
+      </div>
+
+      <!-- タスク一覧 -->
+      <div class="section" id="tasks">
+        <h1>タスク一覧</h1>
+
+        <h2>Phase 1：インフラ準備</h2>
+        <table>
+          <tr><th>#</th><th>タスク</th><th>状態</th></tr>
+          <tr><td>1</td><td>ドメイン取得（dekitayo.jp）</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>2</td><td>Xserver契約</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>3</td><td>ネームサーバー設定</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>4</td><td>サブドメイン作成（cms.dekitayo.jp）</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>5</td><td>WHOIS情報を法人名に変更</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>6</td><td>DNS反映確認</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>7</td><td>SSL設定（cms.dekitayo.jp）</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>8</td><td>Basic認証設定</td><td><span class="status status-done">完了</span></td></tr>
+        </table>
+
+        <h2>Phase 2：WordPress構築</h2>
+        <table>
+          <tr><th>#</th><th>タスク</th><th>状態</th></tr>
+          <tr><td>1</td><td>WordPress初期インストール</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>2</td><td>WordPress初期設定</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>3</td><td>WPGraphQLインストール</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>4</td><td>ACFインストール</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>5</td><td>WPGraphQL for ACFインストール</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>6</td><td>Yoast SEOインストール</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>7</td><td>カスタム投稿タイプ作成（教室）</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>8</td><td>ACFフィールドグループ設計</td><td><span class="status status-pending">未着手</span></td></tr>
+        </table>
+
+        <h2>Phase 3：Next.js構築</h2>
+        <table>
+          <tr><th>#</th><th>タスク</th><th>状態</th></tr>
+          <tr><td>1</td><td>Next.jsプロジェクト作成</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>2</td><td>GraphQLクライアント設定</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>3</td><td>環境変数設定</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>4</td><td>WordPress API連携</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>5</td><td>Vercelアカウント作成</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>6</td><td>GitHubリポジトリ作成</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>7</td><td>Vercelにデプロイ</td><td><span class="status status-pending">未着手</span></td></tr>
+        </table>
+
+        <h2>デザイン制作</h2>
+        <table>
+          <tr><th>#</th><th>タスク</th><th>状態</th></tr>
+          <tr><td>1</td><td>ロゴ制作</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>2</td><td>ファビコン制作</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>3</td><td>OGP画像制作</td><td><span class="status status-pending">未着手</span></td></tr>
+          <tr><td>4</td><td>カラー設計</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>5</td><td>デザインコンセプト</td><td><span class="status status-done">完了</span></td></tr>
+          <tr><td>6</td><td>デザインガイドライン</td><td><span class="status status-done">完了</span></td></tr>
+        </table>
+      </div>
+
+      <!-- プレスリリース手順 -->
+      <div class="section" id="press">
+        <h1>プレスリリース手順</h1>
+
+        <h2>掲載サービス</h2>
+        <table>
+          <tr><th>サービス</th><th>料金</th><th>特徴</th></tr>
+          <tr><td>PR TIMES</td><td>3万円〜</td><td>最大手、メディア転載多い</td></tr>
+          <tr><td>@Press</td><td>3万円〜</td><td>配信先が多い</td></tr>
+          <tr><td>valuepress</td><td>無料〜</td><td>無料プランあり</td></tr>
+          <tr><td>PRTIMES STORY</td><td>無料</td><td>ストーリー形式</td></tr>
+        </table>
+
+        <h2>手順</h2>
+        <h3>Step 1：プレスリリース作成</h3>
+        <ol>
+          <li>タイトル作成（30文字以内）</li>
+          <li>リード文作成（概要）</li>
+          <li>本文作成</li>
+          <li>画像準備（ロゴ、サービス画像）</li>
+          <li>会社概要作成</li>
+        </ol>
+
+        <h3>Step 2：配信サービスに登録</h3>
+        <ol>
+          <li>アカウント作成</li>
+          <li>企業情報登録</li>
+          <li>プレスリリース入稿</li>
+          <li>画像アップロード</li>
+          <li>プレビュー確認</li>
+        </ol>
+
+        <h3>Step 3：配信</h3>
+        <ol>
+          <li>配信日時設定</li>
+          <li>配信実行</li>
+          <li>掲載確認</li>
+        </ol>
+
+        <h3>Step 4：自社サイトに転載</h3>
+        <ol>
+          <li>/media/ ページに記事作成</li>
+          <li>プレスリリース内容を転載</li>
+          <li>配信元へのリンク設置</li>
+          <li>公開</li>
+        </ol>
+
+        <h2>プレスリリースのタイミング</h2>
+        <table>
+          <tr><th>タイミング</th><th>内容</th></tr>
+          <tr><td>サイト公開時</td><td>サービス開始のお知らせ</td></tr>
+          <tr><td>掲載教室数達成時</td><td>「掲載100教室突破」など</td></tr>
+          <tr><td>新機能追加時</td><td>機能アップデート</td></tr>
+          <tr><td>調査レポート発表時</td><td>独自調査の発表</td></tr>
+        </table>
+
+        <h2>テンプレート</h2>
+        <h3>タイトル例</h3>
+        <pre>子どもの自己肯定感を育むプログラミング教室ガイド「できたよ！」を公開</pre>
+
+        <h3>リード文例</h3>
+        <pre>〇〇（運営者/会社名）は、子ども向けプログラミング教室の情報サイト
+「できたよ！」を〇月〇日に公開いたしました。</pre>
+
+        <h3>本文構成</h3>
+        <ol>
+          <li>サービス概要</li>
+          <li>開発背景・想い</li>
+          <li>特徴（3つ程度）</li>
+          <li>今後の展開</li>
+          <li>会社概要</li>
+        </ol>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // セクション切り替え
+    function showSection(sectionId) {
+      // 全セクションを非表示
+      document.querySelectorAll('.section').forEach(section => {
+        section.classList.remove('active');
+      });
+
+      // 全ナビリンクの active を解除
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+      });
+
+      // 対象セクションを表示
+      document.getElementById(sectionId).classList.add('active');
+
+      // 対象ナビリンクを active に
+      event.target.classList.add('active');
+
+      // ヘッダータイトル更新
+      const titles = {
+        'home': 'ホーム',
+        'self-understanding': '自己理解',
+        'strategy': '事業戦略',
+        'sitemap': 'サイトマップ',
+        'pages': 'ページ一覧',
+        'wireframe': 'ワイヤーフレーム',
+        'design-concept': 'デザインコンセプト',
+        'design-guideline': 'デザインガイドライン',
+        'tech': '技術構成',
+        'cms-setup': 'ヘッドレスCMS構築',
+        'tasks': 'タスク一覧',
+        'press': 'プレスリリース手順'
+      };
+      document.getElementById('current-section-title').textContent = titles[sectionId] || sectionId;
+
+      // モバイル時はサイドバーを閉じる
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('open');
+      }
+
+      // スクロールを先頭に
+      window.scrollTo(0, 0);
+    }
+
+    // サイドバートグル（モバイル）
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    // 検索フィルター
+    function filterNav() {
+      const query = document.getElementById('search').value.toLowerCase();
+      document.querySelectorAll('.nav-link').forEach(link => {
+        const text = link.textContent.toLowerCase();
+        link.style.display = text.includes(query) ? 'block' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>
