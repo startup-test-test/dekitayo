@@ -17,8 +17,8 @@ export default async function Home() {
       <main className="flex-1">
         {/* ヒーローセクション */}
         <section
-          className="relative bg-cover bg-center min-h-[350px] md:min-h-[450px] flex items-center"
-          style={{ backgroundImage: "url('/images/hero.jpg')" }}
+          className="relative bg-cover bg-top min-h-[350px] md:min-h-[450px] flex items-center"
+          style={{ backgroundImage: "url('/images/hero.png')" }}
         >
           {/* コンテンツ（ハイライト風テキスト） */}
           <div className="relative max-w-[1200px] mx-auto px-6 py-12 w-full">
